@@ -216,42 +216,6 @@ router.get('/history', auth, async (req, res) => {
   }
 });
 
-// Get interaction details
-router.get('/interactions/:id', auth, async (req, res) => {
-  try {
-    const userId = req.user.id;
-    const interactionId = req.params.id;
-
-    const interaction = await Interaction.findOne({ _id: interactionId, userId });
-    
-    if (!interaction) {
-      return res.status(404).json({ error: 'Interaction not found' });
-    }
-
-    res.json({
-      success: true,
-      interaction: {
-        id: interaction._id,
-        sessionId: interaction.sessionId,
-        query: interaction.query,
-        response: interaction.response,
-        confidence: interaction.confidence,
-        feedback: interaction.feedback,
-        conversationType: interaction.conversationType,
-        responseTime: interaction.responseTime,
-        sources: interaction.sources,
-        metadata: interaction.metadata,
-        qualityScore: interaction.qualityScore,
-        createdAt: interaction.createdAt
-      }
-    });
-
-  } catch (error) {
-    console.error('Error getting interaction details:', error);
-    res.status(500).json({ error: 'Failed to get interaction details' });
-  }
-});
-
 // Get analytics and statistics
 router.get('/analytics', auth, async (req, res) => {
   try {
@@ -354,79 +318,6 @@ router.get('/analytics', auth, async (req, res) => {
   } catch (error) {
     console.error('Error getting analytics:', error);
     res.status(500).json({ error: 'Failed to get analytics' });
-  }
-});
-
-// Search interactions
-router.get('/search', auth, async (req, res) => {
-  try {
-    const userId = req.user.id;
-    const { 
-      q, 
-      page = 1, 
-      limit = 20,
-      minConfidence = 0,
-      feedback,
-      conversationType
-    } = req.query;
-
-    if (!q) {
-      return res.status(400).json({ error: 'Search query (q) is required' });
-    }
-
-    const skip = (page - 1) * limit;
-    
-    const filter = {
-      userId,
-      $text: { $search: q }
-    };
-    
-    if (minConfidence > 0) {
-      filter.confidence = { $gte: parseFloat(minConfidence) };
-    }
-    
-    if (feedback) {
-      filter.feedback = feedback;
-    }
-    
-    if (conversationType) {
-      filter.conversationType = conversationType;
-    }
-
-    const [interactions, total] = await Promise.all([
-      Interaction.find(filter, { score: { $meta: 'textScore' } })
-        .select('sessionId query response confidence feedback conversationType createdAt')
-        .sort({ score: { $meta: 'textScore' }, createdAt: -1 })
-        .skip(skip)
-        .limit(parseInt(limit)),
-      Interaction.countDocuments(filter)
-    ]);
-
-    res.json({
-      success: true,
-      query: q,
-      results: interactions.map(interaction => ({
-        id: interaction._id,
-        sessionId: interaction.sessionId,
-        query: interaction.query,
-        response: interaction.response.substring(0, 200) + '...', // Preview
-        confidence: interaction.confidence,
-        feedback: interaction.feedback,
-        conversationType: interaction.conversationType,
-        createdAt: interaction.createdAt,
-        relevanceScore: interaction._doc.score
-      })),
-      pagination: {
-        current: parseInt(page),
-        total: Math.ceil(total / limit),
-        count: interactions.length,
-        totalResults: total
-      }
-    });
-
-  } catch (error) {
-    console.error('Error searching interactions:', error);
-    res.status(500).json({ error: 'Failed to search interactions' });
   }
 });
 

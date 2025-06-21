@@ -173,65 +173,6 @@ router.post('/evaluate/:modelId', auth, async (req, res) => {
   }
 });
 
-// Get detailed evaluation results
-router.get('/evaluate/:modelId/details', auth, async (req, res) => {
-  try {
-    const userId = req.user.id;
-    const { modelId } = req.params;
-
-    // This would load the detailed evaluation results from file
-    // For now, return a placeholder response
-    res.json({
-      success: true,
-      message: 'Detailed evaluation results would be loaded from saved evaluation file',
-      modelId
-    });
-
-  } catch (error) {
-    console.error('Error getting evaluation details:', error);
-    res.status(500).json({ 
-      error: 'Failed to get evaluation details',
-      message: error.message 
-    });
-  }
-});
-
-// Start automated finetuning pipeline
-router.post('/auto-finetune', auth, async (req, res) => {
-  try {
-    const userId = req.user.id;
-    const {
-      schedule = 'weekly', // daily, weekly, monthly
-      minInteractions = 100,
-      qualityThreshold = 0.8,
-      autoEvaluate = true
-    } = req.body;
-
-    // This would set up an automated pipeline
-    // For now, return a success response with configuration
-    res.json({
-      success: true,
-      message: 'Automated finetuning pipeline configured',
-      configuration: {
-        userId,
-        schedule,
-        minInteractions,
-        qualityThreshold,
-        autoEvaluate,
-        nextRun: new Date(Date.now() + (schedule === 'daily' ? 86400000 : 
-                         schedule === 'weekly' ? 604800000 : 2592000000))
-      }
-    });
-
-  } catch (error) {
-    console.error('Error configuring auto-finetune:', error);
-    res.status(500).json({ 
-      error: 'Failed to configure automated finetuning',
-      message: error.message 
-    });
-  }
-});
-
 // Get finetuning analytics
 router.get('/analytics', auth, async (req, res) => {
   try {
@@ -267,27 +208,6 @@ router.get('/analytics', auth, async (req, res) => {
     console.error('Error getting finetuning analytics:', error);
     res.status(500).json({ 
       error: 'Failed to get analytics',
-      message: error.message 
-    });
-  }
-});
-
-// Cleanup old training data and models
-router.post('/cleanup', auth, async (req, res) => {
-  try {
-    const { retentionDays = 30 } = req.body;
-
-    await finetuningService.cleanup(retentionDays);
-
-    res.json({
-      success: true,
-      message: `Cleanup completed. Removed files older than ${retentionDays} days.`
-    });
-
-  } catch (error) {
-    console.error('Error during cleanup:', error);
-    res.status(500).json({ 
-      error: 'Failed to cleanup',
       message: error.message 
     });
   }

@@ -101,7 +101,7 @@ router.post('/query', auth, async (req, res) => {
   }
 });
 
-// Update knowledge graph with feedback
+// Provide feedback on knowledge graph
 router.post('/feedback', auth, async (req, res) => {
   try {
     const { documentId, feedback, userQuery, response } = req.body;
@@ -206,70 +206,6 @@ router.get('/documents', auth, async (req, res) => {
   } catch (error) {
     console.error('Error listing documents:', error);
     res.status(500).json({ error: 'Failed to list documents' });
-  }
-});
-
-// Get document details
-router.get('/documents/:id', auth, async (req, res) => {
-  try {
-    const userId = req.user.id;
-    const documentId = req.params.id;
-
-    const document = await Document.findOne({ _id: documentId, userId });
-    
-    if (!document) {
-      return res.status(404).json({ error: 'Document not found' });
-    }
-
-    res.json({
-      success: true,
-      document: {
-        id: document._id,
-        title: document.title,
-        sourceId: document.sourceId,
-        contentPreview: document.contentPreview,
-        status: document.processingStatus,
-        processingError: document.processingError,
-        knowledgeGraphId: document.knowledgeGraphId,
-        metadata: document.metadata,
-        usage: document.usage,
-        usageScore: document.usageScore,
-        createdAt: document.createdAt,
-        updatedAt: document.updatedAt
-      }
-    });
-
-  } catch (error) {
-    console.error('Error getting document details:', error);
-    res.status(500).json({ error: 'Failed to get document details' });
-  }
-});
-
-// Delete document and its knowledge graph
-router.delete('/documents/:id', auth, async (req, res) => {
-  try {
-    const userId = req.user.id;
-    const documentId = req.params.id;
-
-    const document = await Document.findOne({ _id: documentId, userId });
-    
-    if (!document) {
-      return res.status(404).json({ error: 'Document not found' });
-    }
-
-    // TODO: Delete from Neo4j knowledge graph
-    // This would require implementing a delete method in KnowledgeGraphService
-    
-    await Document.deleteOne({ _id: documentId });
-
-    res.json({
-      success: true,
-      message: 'Document and knowledge graph deleted successfully'
-    });
-
-  } catch (error) {
-    console.error('Error deleting document:', error);
-    res.status(500).json({ error: 'Failed to delete document' });
   }
 });
 
