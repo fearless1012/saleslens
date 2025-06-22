@@ -9,6 +9,8 @@ Auto-generate personalized sales pitches based on both
 And let sales reps practice live, with AI that gives feedback on tone, clarity, and confidence
 
 Demo Video - https://youtu.be/Lv1TLzeSgX0
+Figma Link - https://www.figma.com/board/zTIdwjQtWRAvet0TIHTM4P/Sales-Lens?node-id=78-142&t=WDQHFcxne1lgZafS-1  for Design and IA
+
 ## Overview
 
 SalesLens API is the backend service for the SalesLens application, which provides API endpoints for managing domain knowledge, customers, pitches, user authentication, courses, and simulations.
