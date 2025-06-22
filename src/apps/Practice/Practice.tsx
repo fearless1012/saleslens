@@ -162,10 +162,10 @@ Jennifer: Let's schedule a demo with my analytics team. This could be exactly wh
       const initialConversation: ConversationItem[] = [
         {
           speaker: "AI",
-          message: `Hello! I'm representing ${
+          message: `Hello! I'm  ${
             customerForm.customerProfile.split(".")[0].split(",")[0] ||
             "the customer"
-          }. I've reviewed the sales approach in this transcript and I'm ready to discuss it from my perspective as a potential customer. Feel free to ask me questions about my needs, concerns, or thoughts on the sales techniques used. What would you like to know?`,
+          }. How are you doing today ?`,
           id: "1",
         },
       ];
@@ -352,7 +352,7 @@ Jennifer: Let's schedule a demo with my analytics team. This could be exactly wh
     <MainLayout title="Practice">
       {/* Customer Profile Form Modal */}
       {showForm && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 overflow-hidden">
           <div className="bg-white rounded-lg p-6 w-full max-w-2xl max-h-[80vh] overflow-y-auto">
             <h2 className="text-2xl font-bold mb-6">
               Generate Sales Pitch Transcript
@@ -542,11 +542,11 @@ Jennifer: Let's schedule a demo with my analytics team. This could be exactly wh
         </div>
       )}
 
-      <div className="grid grid-cols-12 gap-6 h-[calc(100vh-200px)]">
+      <div className="grid grid-cols-12 gap-6 h-screen max-h-screen overflow-hidden">
         {/* Left Panel - Transcript */}
-        <div className="col-span-4">
-          <div className="bg-gradient-to-b from-blue-400 to-blue-600 rounded-lg p-6 h-full">
-            <div className="flex justify-between items-center mb-4">
+        <div className="col-span-4 h-full overflow-hidden">
+          <div className="bg-gradient-to-b from-blue-400 to-blue-600 rounded-lg p-6 h-full flex flex-col">
+            <div className="flex justify-between items-center mb-4 flex-shrink-0">
               <h2 className="text-2xl font-bold text-white">Transcript</h2>
               <button
                 onClick={() => setShowForm(true)}
@@ -555,7 +555,7 @@ Jennifer: Let's schedule a demo with my analytics team. This could be exactly wh
                 New Transcript
               </button>
             </div>
-            <div className="bg-white bg-opacity-10 rounded-lg p-4 h-[calc(100%-5rem)] overflow-y-auto">
+            <div className="bg-white bg-opacity-10 rounded-lg p-4 flex-1 overflow-y-auto">
               <div className="text-white text-sm leading-relaxed">
                 {transcript.split("\n").map((line, index) => {
                   const trimmedLine = line.trim();
@@ -589,10 +589,10 @@ Jennifer: Let's schedule a demo with my analytics team. This could be exactly wh
         </div>
 
         {/* Middle Panel - AI Conversation */}
-        <div className="col-span-4">
+        <div className="col-span-4 h-full overflow-hidden">
           <div className="bg-white rounded-lg shadow h-full flex flex-col">
             {/* Customer Photo and Info */}
-            <div className="p-6 border-b border-gray-200">
+            <div className="p-6 border-b border-gray-200 flex-shrink-0">
               <div className="flex justify-center mb-4">
                 <img
                   src="https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80"
@@ -681,7 +681,7 @@ Jennifer: Let's schedule a demo with my analytics team. This could be exactly wh
             </div>
 
             {/* Message Input */}
-            <div className="p-4 border-t border-gray-200">
+            <div className="p-4 border-t border-gray-200 flex-shrink-0">
               <div className="flex space-x-2">
                 <input
                   type="text"
@@ -714,171 +714,168 @@ Jennifer: Let's schedule a demo with my analytics team. This could be exactly wh
         </div>
 
         {/* Right Panel - Sentiment Analysis */}
-        <div className="col-span-4">
-          <div className="bg-gradient-to-b from-blue-400 to-blue-600 rounded-lg p-6 h-full text-white">
-            <h2 className="text-2xl font-bold mb-4">
+        <div className="col-span-4 h-full overflow-hidden">
+          <div className="bg-gradient-to-b from-blue-400 to-blue-600 rounded-lg p-6 h-full text-white flex flex-col">
+            <h2 className="text-2xl font-bold mb-4 flex-shrink-0">
               Real-Time Sentiment Analysis
             </h2>
-            <div className="bg-white bg-opacity-10 rounded-lg p-4 mb-6">
-              <p className="text-sm text-blue-100 leading-relaxed">
-                AI-powered sentiment analysis of your sales communication using
-                LLaMA. Analysis updates in real-time based on your message tone,
-                confidence, and approach.
-              </p>
-            </div>
-
-            {/* Sentiment Analysis Results */}
-            {sentimentAnalysis && (
+            <div className="flex-1 overflow-y-auto">
               <div className="bg-white bg-opacity-10 rounded-lg p-4 mb-6">
-                <h3 className="font-semibold text-white mb-2">
-                  Latest Analysis
-                </h3>
                 <p className="text-sm text-blue-100 leading-relaxed">
-                  {sentimentAnalysis.analysis}
+                  AI-powered sentiment analysis of your sales communication
+                  using LLaMA. Analysis updates in real-time based on your
+                  message tone, confidence, and approach.
                 </p>
-                <div className="mt-3 text-xs text-blue-200">
-                  Analyzed using LLaMA AI • {new Date().toLocaleTimeString()}
-                </div>
-              </div>
-            )}
-
-            {/* Sentiment Bars */}
-            <div className="space-y-6">
-              <div>
-                <div className="flex justify-between items-center mb-2">
-                  <span className="text-blue-100 font-medium">
-                    Anxiety/Nervousness
-                  </span>
-                  <span className="text-white font-semibold">
-                    {Math.round(sentimentData.anxiety)}%
-                  </span>
-                </div>
-                <div className="w-full bg-white bg-opacity-20 rounded-full h-3">
-                  <div
-                    className="bg-red-400 h-3 rounded-full transition-all duration-1000 ease-in-out"
-                    style={{
-                      width: `${Math.min(
-                        100,
-                        Math.max(0, sentimentData.anxiety)
-                      )}%`,
-                    }}
-                  ></div>
-                </div>
-                <div className="text-xs text-blue-200 mt-1">
-                  {sentimentData.anxiety > 70
-                    ? "High - Consider slowing down and building confidence"
-                    : sentimentData.anxiety > 40
-                    ? "Moderate - Focus on preparation and key points"
-                    : "Low - Good confidence level"}
-                </div>
               </div>
 
-              <div>
-                <div className="flex justify-between items-center mb-2">
-                  <span className="text-blue-100 font-medium">
-                    Confidence/Enthusiasm
-                  </span>
-                  <span className="text-white font-semibold">
-                    {Math.round(sentimentData.happy)}%
-                  </span>
+              {/* Sentiment Analysis Results */}
+              {sentimentAnalysis && (
+                <div className="bg-white bg-opacity-10 rounded-lg p-4 mb-6">
+                  <h3 className="font-semibold text-white mb-2">
+                    Latest Analysis
+                  </h3>
+                  <p className="text-sm text-blue-100 leading-relaxed">
+                    {sentimentAnalysis.analysis}
+                  </p>
+                  <div className="mt-3 text-xs text-blue-200">
+                    Analyzed using LLaMA AI • {new Date().toLocaleTimeString()}
+                  </div>
                 </div>
-                <div className="w-full bg-white bg-opacity-20 rounded-full h-3">
-                  <div
-                    className="bg-green-400 h-3 rounded-full transition-all duration-1000 ease-in-out"
-                    style={{
-                      width: `${Math.min(
-                        100,
-                        Math.max(0, sentimentData.happy)
-                      )}%`,
-                    }}
-                  ></div>
+              )}
+
+              {/* Sentiment Bars */}
+              <div className="space-y-6">
+                <div>
+                  <div className="flex justify-between items-center mb-2">
+                    <span className="text-blue-100 font-medium">
+                      Anxiety/Nervousness
+                    </span>
+                    <span className="text-white font-semibold">
+                      {Math.round(sentimentData.anxiety)}%
+                    </span>
+                  </div>
+                  <div className="w-full bg-white bg-opacity-20 rounded-full h-3">
+                    <div
+                      className="bg-red-400 h-3 rounded-full transition-all duration-1000 ease-in-out"
+                      style={{
+                        width: `${Math.min(
+                          100,
+                          Math.max(0, sentimentData.anxiety)
+                        )}%`,
+                      }}
+                    ></div>
+                  </div>
+                  <div className="text-xs text-blue-200 mt-1">
+                    {sentimentData.anxiety > 70
+                      ? "High - Consider slowing down and building confidence"
+                      : sentimentData.anxiety > 40
+                      ? "Moderate - Focus on preparation and key points"
+                      : "Low - Good confidence level"}
+                  </div>
                 </div>
-                <div className="text-xs text-blue-200 mt-1">
-                  {sentimentData.happy > 70
-                    ? "Excellent - Strong, confident communication"
-                    : sentimentData.happy > 40
-                    ? "Good - Maintain this positive energy"
-                    : "Low - Focus on value proposition and benefits"}
+
+                <div>
+                  <div className="flex justify-between items-center mb-2">
+                    <span className="text-blue-100 font-medium">
+                      Confidence/Enthusiasm
+                    </span>
+                    <span className="text-white font-semibold">
+                      {Math.round(sentimentData.happy)}%
+                    </span>
+                  </div>
+                  <div className="w-full bg-white bg-opacity-20 rounded-full h-3">
+                    <div
+                      className="bg-green-400 h-3 rounded-full transition-all duration-1000 ease-in-out"
+                      style={{
+                        width: `${Math.min(
+                          100,
+                          Math.max(0, sentimentData.happy)
+                        )}%`,
+                      }}
+                    ></div>
+                  </div>
+                  <div className="text-xs text-blue-200 mt-1">
+                    {sentimentData.happy > 70
+                      ? "Excellent - Strong, confident communication"
+                      : sentimentData.happy > 40
+                      ? "Good - Maintain this positive energy"
+                      : "Low - Focus on value proposition and benefits"}
+                  </div>
+                </div>
+
+                <div>
+                  <div className="flex justify-between items-center mb-2">
+                    <span className="text-blue-100 font-medium">
+                      Doubt/Uncertainty
+                    </span>
+                    <span className="text-white font-semibold">
+                      {Math.round(sentimentData.doubt)}%
+                    </span>
+                  </div>
+                  <div className="w-full bg-white bg-opacity-20 rounded-full h-3">
+                    <div
+                      className="bg-yellow-400 h-3 rounded-full transition-all duration-1000 ease-in-out"
+                      style={{
+                        width: `${Math.min(
+                          100,
+                          Math.max(0, sentimentData.doubt)
+                        )}%`,
+                      }}
+                    ></div>
+                  </div>
+                  <div className="text-xs text-blue-200 mt-1">
+                    {sentimentData.doubt > 70
+                      ? "High - Address concerns with specific examples"
+                      : sentimentData.doubt > 40
+                      ? "Moderate - Provide more concrete details"
+                      : "Low - Clear and convincing communication"}
+                  </div>
                 </div>
               </div>
 
-              <div>
-                <div className="flex justify-between items-center mb-2">
-                  <span className="text-blue-100 font-medium">
-                    Doubt/Uncertainty
-                  </span>
-                  <span className="text-white font-semibold">
-                    {Math.round(sentimentData.doubt)}%
-                  </span>
+              {/* AI-Powered Recommendations */}
+              <div className="mt-8 bg-white bg-opacity-10 rounded-lg p-4">
+                <h3 className="font-semibold text-white mb-3">
+                  AI Coaching Tips
+                </h3>
+                <div className="space-y-2 text-sm text-blue-100">
+                  {sentimentData.anxiety > 50 && (
+                    <p>
+                      • 🧘 Take a breath and slow down your pace to reduce
+                      nervousness
+                    </p>
+                  )}
+                  {sentimentData.happy < 50 && (
+                    <p>
+                      • 🔥 Focus more on benefits and positive outcomes for the
+                      customer
+                    </p>
+                  )}
+                  {sentimentData.doubt > 50 && (
+                    <p>
+                      • 📊 Use specific data, case studies, or examples to build
+                      credibility
+                    </p>
+                  )}
+                  {sentimentData.anxiety < 30 && sentimentData.happy > 70 && (
+                    <p>
+                      • ✨ Excellent confidence! Maintain this energy and
+                      enthusiasm
+                    </p>
+                  )}
+                  <p>
+                    • 🎯 Ask discovery questions to better understand customer
+                    needs
+                  </p>
+                  <p>
+                    • 👂 Practice active listening and acknowledge customer
+                    concerns
+                  </p>
                 </div>
-                <div className="w-full bg-white bg-opacity-20 rounded-full h-3">
-                  <div
-                    className="bg-yellow-400 h-3 rounded-full transition-all duration-1000 ease-in-out"
-                    style={{
-                      width: `${Math.min(
-                        100,
-                        Math.max(0, sentimentData.doubt)
-                      )}%`,
-                    }}
-                  ></div>
-                </div>
-                <div className="text-xs text-blue-200 mt-1">
-                  {sentimentData.doubt > 70
-                    ? "High - Address concerns with specific examples"
-                    : sentimentData.doubt > 40
-                    ? "Moderate - Provide more concrete details"
-                    : "Low - Clear and convincing communication"}
-                </div>
-              </div>
-            </div>
-
-            {/* AI-Powered Recommendations */}
-            <div className="mt-8 bg-white bg-opacity-10 rounded-lg p-4">
-              <h3 className="font-semibold text-white mb-3">
-                AI Coaching Tips
-              </h3>
-              <div className="space-y-2 text-sm text-blue-100">
-                {sentimentData.anxiety > 50 && (
-                  <p>
-                    • 🧘 Take a breath and slow down your pace to reduce
-                    nervousness
-                  </p>
-                )}
-                {sentimentData.happy < 50 && (
-                  <p>
-                    • 🔥 Focus more on benefits and positive outcomes for the
-                    customer
-                  </p>
-                )}
-                {sentimentData.doubt > 50 && (
-                  <p>
-                    • 📊 Use specific data, case studies, or examples to build
-                    credibility
-                  </p>
-                )}
-                {sentimentData.anxiety < 30 && sentimentData.happy > 70 && (
-                  <p>
-                    • ✨ Excellent confidence! Maintain this energy and
-                    enthusiasm
-                  </p>
-                )}
-                <p>
-                  • 🎯 Ask discovery questions to better understand customer
-                  needs
-                </p>
-                <p>
-                  • 👂 Practice active listening and acknowledge customer
-                  concerns
-                </p>
               </div>
             </div>
           </div>
         </div>
-      </div>
-
-      {/* Footer */}
-      <div className="text-center text-sm text-gray-600 mt-8 pt-6 border-t">
-        SalesLens ©2025
       </div>
     </MainLayout>
   );
