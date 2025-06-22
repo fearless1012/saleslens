@@ -126,12 +126,18 @@ Focus on extracting actionable sales intelligence that can be used to train sale
                     nodes: {
                       type: 'array',
                       items: {
-                        type: 'object',
-                        properties: {
+                        type: 'object',                        properties: {
                           id: { type: 'string' },
                           type: { type: 'string' },
-                          label: { type: 'string' },
-                          properties: { type: 'object' }
+                          label: { type: 'string' },                          properties: { 
+                            type: 'object',
+                            properties: {
+                              frequency: { type: 'number' },
+                              successRate: { type: 'number' },
+                              description: { type: 'string' }
+                            },
+                            required: ['frequency', 'successRate', 'description']
+                          }
                         },
                         required: ['id', 'type', 'label']
                       }
@@ -139,14 +145,20 @@ Focus on extracting actionable sales intelligence that can be used to train sale
                     edges: {
                       type: 'array',
                       items: {
-                        type: 'object',
-                        properties: {
+                        type: 'object',                        properties: {
                           id: { type: 'string' },
                           source: { type: 'string' },
                           target: { type: 'string' },
                           type: { type: 'string' },
-                          label: { type: 'string' },
-                          properties: { type: 'object' }
+                          label: { type: 'string' },                          properties: { 
+                            type: 'object',
+                            properties: {
+                              strength: { type: 'number' },
+                              confidence: { type: 'number' },
+                              description: { type: 'string' }
+                            },
+                            required: ['strength', 'confidence', 'description']
+                          }
                         },
                         required: ['id', 'source', 'target', 'type', 'label']
                       }
