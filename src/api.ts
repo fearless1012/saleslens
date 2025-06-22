@@ -111,4 +111,17 @@ export const pitchAPI = {
     api.get(`/pitches/download/${id}`, { responseType: "blob" }),
 };
 
+// Transcripts APIs
+export const transcriptAPI = {
+  generate: (data: {
+    customerProfile: string;
+    includeHistoricalData?: boolean;
+    industryFocus?: string;
+    specificProducts?: string[];
+    pitchType?: "discovery" | "demo" | "proposal" | "closing";
+  }) => api.post("/transcripts/generate", data),
+
+  getHistory: (params?: any) => api.get("/transcripts/history", { params }),
+};
+
 export default api;
