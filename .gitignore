@@ -43,3 +43,6 @@ Thumbs.db
 # Uploaded files
 /backend/uploads/*
 !/backend/uploads/.gitkeep
+
+# llamatypescriptapi
+llama-api-typescript
