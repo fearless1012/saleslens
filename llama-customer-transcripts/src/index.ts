@@ -68,10 +68,8 @@ class KnowledgeGraphGenerator {
       
       console.log(`Processing ${processedTranscripts.length} transcripts...`);
       console.log(`Successful: ${processedTranscripts.filter(t => t.result === 'successful').length}`);
-      console.log(`Unsuccessful: ${processedTranscripts.filter(t => t.result === 'unsuccessful').length}`);
-
-      // Generate knowledge graph using Llama
-      const knowledgeGraph = await this.llamaService.generateKnowledgeGraph(product, processedTranscripts);
+      console.log(`Unsuccessful: ${processedTranscripts.filter(t => t.result === 'unsuccessful').length}`);      // Generate knowledge graph using Llama
+      const knowledgeGraph = await this.llamaService.generateKnowledgeGraph(processedTranscripts);
 
       return knowledgeGraph;
     } catch (error) {
@@ -163,14 +161,10 @@ class KnowledgeGraphGenerator {
           context: 'Small business with budget constraints',
           transcriptText: transcript2
         }
-      ];
-
-      console.log('Generating knowledge graph from sample data...');
+      ];      console.log('Generating knowledge graph from sample data...');
       
-      const knowledgeGraph = await this.llamaService.generateKnowledgeGraph(
-        'Llama AI Platform',
-        sampleTranscripts
-      );
+      const knowledgeGraphJson = await this.llamaService.generateKnowledgeGraph(sampleTranscripts);
+      const knowledgeGraph = JSON.parse(knowledgeGraphJson);
 
       const outputPath = await FileService.saveKnowledgeGraphWithTimestamp(knowledgeGraph, 'output/demo');
       await FileService.saveSummaryReport(knowledgeGraph, outputPath);
