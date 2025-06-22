@@ -4,105 +4,105 @@ Total Records: 200
 
 FORMAT: Name | Industry | Revenue Generated ($) | Status | Date Joined | Leave Date | Reason for Leaving | Acquisition Source
 
-1. Sarah Chen | Technology Consulting | 125000 | Active | 2023-01-15 | N/A | N/A | Employee Referral
-2. Michael Rodriguez | Healthcare Analytics | 89000 | Active | 2023-02-03 | N/A | N/A | Google Ads Campaign
+1. Sarah Chen | Technology Consulting | 125000 | Inactive | 2023-01-15 | 2024-08-22 | Switched to Open Source Solution | Employee Referral
+2. Michael Rodriguez | Healthcare Analytics | 89000 | Inactive | 2023-02-03 | 2024-09-15 | HIPAA Compliance Issues | Google Ads Campaign
 3. Jennifer Park | Financial Services | 156000 | Active | 2023-02-18 | N/A | N/A | Company Website
 4. David Thompson | E-commerce | 78000 | Inactive | 2023-03-05 | 2024-11-12 | Budget Constraints | LinkedIn Advertisement
-5. Lisa Wang | Education Technology | 92000 | Active | 2023-03-22 | N/A | N/A | Industry Conference
-6. Robert Martinez | Manufacturing | 134000 | Active | 2023-04-10 | N/A | N/A | Partner Referral
+5. Lisa Wang | Education Technology | 92000 | Inactive | 2023-03-22 | 2024-12-05 | School District Budget Cuts | Industry Conference
+6. Robert Martinez | Manufacturing | 134000 | Inactive | 2023-04-10 | 2024-10-15 | Merged with Parent Company | Partner Referral
 7. Emily Davis | Media & Entertainment | 67000 | Inactive | 2023-04-28 | 2024-08-15 | Switched to Competitor | Social Media Ad
-8. James Wilson | Automotive | 145000 | Active | 2023-05-14 | N/A | N/A | Trade Show
-9. Maria Garcia | Real Estate | 83000 | Active | 2023-05-30 | N/A | N/A | Cold Outreach
+8. James Wilson | Automotive | 145000 | Inactive | 2023-05-14 | 2025-01-30 | Industry Downturn | Trade Show
+9. Maria Garcia | Real Estate | 83000 | Inactive | 2023-05-30 | 2024-12-18 | Market Recession Impact | Cold Outreach
 10. Christopher Lee | Retail Analytics | 98000 | Active | 2023-06-16 | N/A | N/A | Webinar Attendance
 11. Amanda Johnson | Legal Tech | 112000 | Inactive | 2023-07-02 | 2025-01-20 | Company Restructuring | Employee Referral
-12. Ryan Brown | Energy & Utilities | 167000 | Active | 2023-07-19 | N/A | N/A | Industry Publication
-13. Nicole Taylor | Logistics | 76000 | Active | 2023-08-05 | N/A | N/A | Google Ads Campaign
-14. Kevin Anderson | Insurance | 129000 | Active | 2023-08-22 | N/A | N/A | Company Website
+12. Ryan Brown | Energy & Utilities | 167000 | Inactive | 2023-07-19 | 2024-11-05 | Acquisition by Larger Firm | Industry Publication
+13. Nicole Taylor | Logistics | 76000 | Inactive | 2023-08-05 | 2024-10-12 | Cost Optimization Initiative | Google Ads Campaign
+14. Kevin Anderson | Insurance | 129000 | Inactive | 2023-08-22 | 2025-02-18 | Regulatory Changes | Company Website
 15. Rachel Moore | Pharmaceutical | 188000 | Active | 2023-09-08 | N/A | N/A | Research Partnership
 16. Brandon White | Food & Beverage | 71000 | Inactive | 2023-09-25 | 2024-12-03 | Technical Issues | LinkedIn Advertisement
-17. Stephanie Harris | Telecommunications | 143000 | Active | 2023-10-12 | N/A | N/A | Industry Conference
-18. Justin Clark | Gaming | 95000 | Active | 2023-10-29 | N/A | N/A | YouTube Sponsorship
-19. Melissa Lewis | Agriculture Tech | 86000 | Active | 2023-11-15 | N/A | N/A | Partner Referral
+17. Stephanie Harris | Telecommunications | 143000 | Inactive | 2023-10-12 | 2024-12-20 | Technology Migration | Industry Conference
+18. Justin Clark | Gaming | 95000 | Inactive | 2023-10-29 | 2025-01-15 | Studio Closure | YouTube Sponsorship
+19. Melissa Lewis | Agriculture Tech | 86000 | Inactive | 2023-11-15 | 2024-11-30 | Seasonal Budget Cuts | Partner Referral
 20. Tyler Robinson | Construction | 108000 | Inactive | 2023-12-01 | 2025-03-10 | Budget Constraints | Trade Show
-21. Kimberly Walker | Fashion & Apparel | 64000 | Active | 2023-12-18 | N/A | N/A | Influencer Marketing
-22. Anthony Hall | Cybersecurity | 152000 | Active | 2024-01-04 | N/A | N/A | Security Conference
-23. Samantha Allen | Marketing Analytics | 102000 | Active | 2024-01-21 | N/A | N/A | Cold Outreach
-24. Daniel Young | Transportation | 118000 | Active | 2024-02-07 | N/A | N/A | Industry Forum
-25. Jessica King | Hospitality | 79000 | Active | 2024-02-24 | N/A | N/A | Travel Blog Review
+21. Kimberly Walker | Fashion & Apparel | 64000 | Inactive | 2023-12-18 | 2025-03-22 | Fashion Industry Downturn | Influencer Marketing
+22. Anthony Hall | Cybersecurity | 152000 | Inactive | 2024-01-04 | 2025-01-08 | Contract Non-Renewal | Security Conference
+23. Samantha Allen | Marketing Analytics | 102000 | Inactive | 2024-01-21 | 2024-11-15 | Privacy Law Changes | Cold Outreach
+24. Daniel Young | Transportation | 118000 | Inactive | 2024-02-07 | 2025-02-28 | Supply Chain Disruption | Industry Forum
+25. Jessica King | Hospitality | 79000 | Inactive | 2024-02-24 | 2024-12-10 | Tourism Industry Decline | Travel Blog Review
 26. Matthew Wright | Sports Analytics | 91000 | Inactive | 2024-03-12 | 2025-01-05 | Switched to Competitor | ESPN Partnership
-27. Ashley Lopez | Environmental Tech | 87000 | Active | 2024-03-29 | N/A | N/A | Climate Summit
-28. Joshua Hill | Aerospace | 174000 | Active | 2024-04-15 | N/A | N/A | Government Contract
-29. Lauren Green | Biotechnology | 139000 | Active | 2024-05-02 | N/A | N/A | Scientific Journal
-30. Andrew Adams | Music Technology | 73000 | Active | 2024-05-19 | N/A | N/A | Music Festival Booth
-31. Brittany Baker | Pet Care Industry | 82000 | Active | 2024-06-05 | N/A | N/A | Pet Expo
-32. Jonathan Gonzalez | Mining & Minerals | 161000 | Active | 2024-06-22 | N/A | N/A | Mining Conference
+27. Ashley Lopez | Environmental Tech | 87000 | Inactive | 2024-03-29 | 2025-05-15 | Federal Funding Cut | Climate Summit
+28. Joshua Hill | Aerospace | 174000 | Inactive | 2024-04-15 | 2025-06-20 | Defense Contract Ended | Government Contract
+29. Lauren Green | Biotechnology | 139000 | Inactive | 2024-05-02 | 2025-04-30 | Research Grant Expired | Scientific Journal
+30. Andrew Adams | Music Technology | 73000 | Inactive | 2024-05-19 | 2025-03-25 | Streaming Wars Impact | Music Festival Booth
+31. Brittany Baker | Pet Care Industry | 82000 | Inactive | 2024-06-05 | 2025-01-10 | Market Consolidation | Pet Expo
+32. Jonathan Gonzalez | Mining & Minerals | 161000 | Inactive | 2024-06-22 | 2025-02-14 | Environmental Concerns | Mining Conference
 33. Megan Nelson | Social Media Analytics | 94000 | Inactive | 2024-07-09 | 2025-02-14 | Company Merger | Twitter Campaign
-34. Kevin Carter | Renewable Energy | 127000 | Active | 2024-07-26 | N/A | N/A | Green Tech Summit
-35. Tiffany Mitchell | Beauty & Cosmetics | 68000 | Active | 2024-08-12 | N/A | N/A | Beauty Convention
-36. Jordan Perez | Gaming Analytics | 103000 | Active | 2024-08-29 | N/A | N/A | Gaming Expo
-37. Crystal Roberts | Healthcare AI | 145000 | Active | 2024-09-15 | N/A | N/A | Medical Conference
-38. Marcus Turner | Supply Chain | 114000 | Active | 2024-10-02 | N/A | N/A | Logistics Summit
-39. Diana Phillips | EdTech Startups | 89000 | Active | 2024-10-19 | N/A | N/A | Startup Accelerator
+34. Kevin Carter | Renewable Energy | 127000 | Inactive | 2024-07-26 | 2025-03-18 | Policy Changes | Green Tech Summit
+35. Tiffany Mitchell | Beauty & Cosmetics | 68000 | Inactive | 2024-08-12 | 2025-01-25 | Supply Chain Issues | Beauty Convention
+36. Jordan Perez | Gaming Analytics | 103000 | Inactive | 2024-08-29 | 2025-04-12 | Platform Shutdown | Gaming Expo
+37. Crystal Roberts | Healthcare AI | 145000 | Inactive | 2024-09-15 | 2025-02-28 | FDA Regulations | Medical Conference
+38. Marcus Turner | Supply Chain | 114000 | Inactive | 2024-10-02 | 2025-03-20 | Technology Obsolescence | Logistics Summit
+39. Diana Phillips | EdTech Startups | 89000 | Inactive | 2024-10-19 | 2025-01-15 | Funding Dried Up | Startup Accelerator
 40. Steven Campbell | Drone Technology | 96000 | Inactive | 2024-11-05 | 2025-04-18 | Technical Limitations | Tech Blog Feature
-41. Vanessa Parker | Mental Health Tech | 85000 | Active | 2024-11-22 | N/A | N/A | Healthcare Innovation Fair
-42. Gerald Evans | Smart City Solutions | 156000 | Active | 2024-12-09 | N/A | N/A | Smart Cities Conference
-43. Alexis Edwards | Virtual Reality | 107000 | Active | 2024-12-26 | N/A | N/A | VR/AR Expo
-44. Trevor Collins | Blockchain Analytics | 132000 | Active | 2025-01-12 | N/A | N/A | Crypto Conference
-45. Natalie Stewart | Food Delivery Tech | 77000 | Active | 2025-01-29 | N/A | N/A | Food Tech Summit
-46. Gregory Morris | Weather Analytics | 99000 | Active | 2025-02-15 | N/A | N/A | Climate Data Conference
+41. Vanessa Parker | Mental Health Tech | 85000 | Inactive | 2024-11-22 | 2025-04-08 | Licensing Issues | Healthcare Innovation Fair
+42. Gerald Evans | Smart City Solutions | 156000 | Inactive | 2024-12-09 | 2025-05-22 | Municipal Budget Cuts | Smart Cities Conference
+43. Alexis Edwards | Virtual Reality | 107000 | Inactive | 2024-12-26 | 2025-04-15 | Hardware Compatibility Issues | VR/AR Expo
+44. Trevor Collins | Blockchain Analytics | 132000 | Inactive | 2025-01-12 | 2025-06-08 | Crypto Market Crash | Crypto Conference
+45. Natalie Stewart | Food Delivery Tech | 77000 | Inactive | 2025-01-29 | 2025-05-12 | Market Saturation | Food Tech Summit
+46. Gregory Morris | Weather Analytics | 99000 | Inactive | 2025-02-15 | 2025-06-20 | Government Contract Loss | Climate Data Conference
 47. Heather Rogers | HR Technology | 88000 | Inactive | 2025-03-04 | 2025-06-10 | Platform Migration | HR Tech Expo
-48. Carlos Reed | IoT Solutions | 122000 | Active | 2025-03-21 | N/A | N/A | IoT World Congress
-49. Patricia Cook | Customer Service AI | 93000 | Active | 2025-04-07 | N/A | N/A | Customer Experience Summit
+48. Carlos Reed | IoT Solutions | 122000 | Inactive | 2025-03-21 | 2025-06-15 | Security Vulnerabilities | IoT World Congress
+49. Patricia Cook | Customer Service AI | 93000 | Inactive | 2025-04-07 | 2025-06-25 | Performance Issues | Customer Experience Summit
 50. Victor Morgan | Quantum Computing | 187000 | Active | 2025-04-24 | N/A | N/A | Quantum Research Partnership
-51. Rebecca Bailey | Social Impact Tech | 81000 | Active | 2025-05-11 | N/A | N/A | Social Good Conference
-52. Felix Rivera | Language Translation | 105000 | Active | 2025-05-28 | N/A | N/A | Localization Summit
-53. Gabriela Cooper | Mental Wellness Apps | 74000 | Active | 2025-06-14 | N/A | N/A | Wellness Technology Fair
+51. Rebecca Bailey | Social Impact Tech | 81000 | Inactive | 2025-05-11 | 2025-06-30 | Grant Funding Ended | Social Good Conference
+52. Felix Rivera | Language Translation | 105000 | Inactive | 2025-05-28 | 2025-07-10 | API Limitations | Localization Summit
+53. Gabriela Cooper | Mental Wellness Apps | 74000 | Inactive | 2025-06-14 | 2025-07-20 | Data Breach Concerns | Wellness Technology Fair
 54. Austin Richardson | Agricultural Drones | 119000 | Active | 2023-01-28 | N/A | N/A | AgTech Conference
 55. Stephanie Ward | Smart Home Technology | 86000 | Inactive | 2023-02-14 | 2024-09-22 | Product Discontinuation | Home Automation Show
-56. Marcus Torres | Sports Betting Analytics | 111000 | Active | 2023-03-02 | N/A | N/A | Sports Analytics Conference
-57. Carmen Peterson | Elderly Care Tech | 92000 | Active | 2023-03-19 | N/A | N/A | Healthcare Innovation Summit
-58. Derrick Gray | Maritime Logistics | 138000 | Active | 2023-04-05 | N/A | N/A | Maritime Technology Conference
-59. Monica Ramirez | Fashion AI | 69000 | Active | 2023-04-22 | N/A | N/A | Fashion Tech Week
-60. Blake James | Financial Fraud Detection | 149000 | Active | 2023-05-09 | N/A | N/A | FinSec Conference
+56. Marcus Torres | Sports Betting Analytics | 111000 | Inactive | 2023-03-02 | 2024-08-15 | Legal Restrictions | Sports Analytics Conference
+57. Carmen Peterson | Elderly Care Tech | 92000 | Inactive | 2023-03-19 | 2024-09-10 | Insurance Coverage Issues | Healthcare Innovation Summit
+58. Derrick Gray | Maritime Logistics | 138000 | Inactive | 2023-04-05 | 2024-11-18 | Port Automation | Maritime Technology Conference
+59. Monica Ramirez | Fashion AI | 69000 | Inactive | 2023-04-22 | 2024-10-05 | Trend Prediction Failures | Fashion Tech Week
+60. Blake James | Financial Fraud Detection | 149000 | Inactive | 2023-05-09 | 2024-12-22 | False Positive Issues | FinSec Conference
 61. Candice Watson | Podcast Analytics | 84000 | Inactive | 2023-05-26 | 2024-10-14 | Feature Limitations | Podcast Movement
-62. Lorenzo Brooks | Renewable Battery Tech | 126000 | Active | 2023-06-12 | N/A | N/A | Energy Storage Summit
-63. Jasmine Kelly | Digital Art Platforms | 78000 | Active | 2023-06-29 | N/A | N/A | Digital Art Fair
-64. Frederick Sanders | Precision Agriculture | 115000 | Active | 2023-07-16 | N/A | N/A | Precision Ag Conference
-65. Courtney Price | Telemedicine | 101000 | Active | 2023-08-02 | N/A | N/A | Telehealth Summit
-66. Donovan Bennett | Carbon Tracking | 97000 | Active | 2023-08-19 | N/A | N/A | Climate Tech Conference
+62. Lorenzo Brooks | Renewable Battery Tech | 126000 | Inactive | 2023-06-12 | 2024-11-28 | Technology Breakthrough by Competitor | Energy Storage Summit
+63. Jasmine Kelly | Digital Art Platforms | 78000 | Inactive | 2023-06-29 | 2024-12-15 | NFT Market Collapse | Digital Art Fair
+64. Frederick Sanders | Precision Agriculture | 115000 | Inactive | 2023-07-16 | 2024-10-30 | Drought Impact | Precision Ag Conference
+65. Courtney Price | Telemedicine | 101000 | Inactive | 2023-08-02 | 2025-01-18 | Regulatory Compliance Costs | Telehealth Summit
+66. Donovan Bennett | Carbon Tracking | 97000 | Inactive | 2023-08-19 | 2024-11-25 | Carbon Credit Policy Changes | Climate Tech Conference
 67. Jacqueline Wood | Event Management Tech | 73000 | Inactive | 2023-09-05 | 2025-01-30 | Industry Downturn | Event Tech Summit
-68. Terrence Barnes | Smart Manufacturing | 142000 | Active | 2023-09-22 | N/A | N/A | Industrial IoT Conference
-69. Charlene Ross | Vaccine Distribution | 109000 | Active | 2023-10-09 | N/A | N/A | Global Health Summit
-70. Marco Henderson | Space Technology | 165000 | Active | 2023-10-26 | N/A | N/A | Space Technology Conference
-71. Valerie Coleman | Legal Document AI | 95000 | Active | 2023-11-12 | N/A | N/A | LegalTech Conference
-72. Spencer Jenkins | Autonomous Vehicles | 158000 | Active | 2023-11-29 | N/A | N/A | Autonomous Vehicle Summit
-73. Jaclyn Perry | Social Commerce | 82000 | Active | 2023-12-16 | N/A | N/A | E-commerce Expo
+68. Terrence Barnes | Smart Manufacturing | 142000 | Inactive | 2023-09-22 | 2025-02-12 | Factory Automation | Industrial IoT Conference
+69. Charlene Ross | Vaccine Distribution | 109000 | Inactive | 2023-10-09 | 2024-12-20 | Pandemic Response Ended | Global Health Summit
+70. Marco Henderson | Space Technology | 165000 | Inactive | 2023-10-26 | 2025-01-30 | Mission Delays | Space Technology Conference
+71. Valerie Coleman | Legal Document AI | 95000 | Inactive | 2023-11-12 | 2024-12-08 | Accuracy Concerns | LegalTech Conference
+72. Spencer Jenkins | Autonomous Vehicles | 158000 | Inactive | 2023-11-29 | 2025-03-15 | Safety Regulations | Autonomous Vehicle Summit
+73. Jaclyn Perry | Social Commerce | 82000 | Inactive | 2023-12-16 | 2025-02-20 | Platform Algorithm Changes | E-commerce Expo
 74. Wesley Powell | Construction AI | 123000 | Inactive | 2024-01-02 | 2025-03-25 | Safety Concerns | Construction Tech Fair
-75. Destiny Long | Virtual Events | 76000 | Active | 2024-01-19 | N/A | N/A | Virtual Event Expo
-76. Clarence Butler | Wildlife Conservation Tech | 88000 | Active | 2024-02-05 | N/A | N/A | Conservation Technology Summit
-77. Jenna Russell | Influencer Analytics | 91000 | Active | 2024-02-22 | N/A | N/A | Influencer Marketing Conference
-78. Rodney Griffin | Smart Grid Technology | 134000 | Active | 2024-03-10 | N/A | N/A | Smart Grid Conference
-79. Chelsea Diaz | Travel Planning AI | 79000 | Active | 2024-03-27 | N/A | N/A | Travel Technology Summit
-80. Allan Hayes | Disaster Response Tech | 117000 | Active | 2024-04-13 | N/A | N/A | Emergency Management Conference
+75. Destiny Long | Virtual Events | 76000 | Inactive | 2024-01-19 | 2024-08-25 | Return to In-Person Events | Virtual Event Expo
+76. Clarence Butler | Wildlife Conservation Tech | 88000 | Inactive | 2024-02-05 | 2024-11-12 | Habitat Protection Policies | Conservation Technology Summit
+77. Jenna Russell | Influencer Analytics | 91000 | Inactive | 2024-02-22 | 2024-12-18 | Platform Privacy Updates | Influencer Marketing Conference
+78. Rodney Griffin | Smart Grid Technology | 134000 | Inactive | 2024-03-10 | 2025-01-22 | Grid Modernization Delays | Smart Grid Conference
+79. Chelsea Diaz | Travel Planning AI | 79000 | Inactive | 2024-03-27 | 2024-10-15 | Travel Industry Recovery | Travel Technology Summit
+80. Allan Hayes | Disaster Response Tech | 117000 | Inactive | 2024-04-13 | 2025-02-08 | Emergency Response Budget Cuts | Emergency Management Conference
 81. Paige Myers | Personal Finance AI | 85000 | Inactive | 2024-04-30 | 2025-02-08 | Regulatory Issues | FinTech Summit
-82. Quinton Ford | Ocean Cleanup Technology | 102000 | Active | 2024-05-17 | N/A | N/A | Ocean Conservation Summit
-83. Monique Hamilton | Elderly Monitoring | 87000 | Active | 2024-06-03 | N/A | N/A | Senior Care Technology Fair
-84. Clifford Graham | Wine Industry Analytics | 94000 | Active | 2024-06-20 | N/A | N/A | Wine Technology Conference
-85. Brandy Sullivan | Pet Health Monitoring | 81000 | Active | 2024-07-07 | N/A | N/A | Pet Technology Expo
-86. Orlando Wallace | Archaeological Tech | 96000 | Active | 2024-07-24 | N/A | N/A | Digital Archaeology Conference
-87. Krystal West | Urban Planning AI | 128000 | Active | 2024-08-10 | N/A | N/A | Urban Innovation Summit
-88. Jeremiah Patterson | Language Learning AI | 89000 | Active | 2024-08-27 | N/A | N/A | EdTech Conference
-89. Felicia Armstrong | Climate Modeling | 131000 | Active | 2024-09-13 | N/A | N/A | Climate Science Summit
+82. Quinton Ford | Ocean Cleanup Technology | 102000 | Inactive | 2024-05-17 | 2025-03-25 | International Funding Issues | Ocean Conservation Summit
+83. Monique Hamilton | Elderly Monitoring | 87000 | Inactive | 2024-06-03 | 2024-12-10 | Privacy Compliance | Senior Care Technology Fair
+84. Clifford Graham | Wine Industry Analytics | 94000 | Inactive | 2024-06-20 | 2025-01-12 | Harvest Variability | Wine Technology Conference
+85. Brandy Sullivan | Pet Health Monitoring | 81000 | Inactive | 2024-07-07 | 2024-11-20 | Veterinary Industry Changes | Pet Technology Expo
+86. Orlando Wallace | Archaeological Tech | 96000 | Inactive | 2024-07-24 | 2025-02-15 | Museum Budget Cuts | Digital Archaeology Conference
+87. Krystal West | Urban Planning AI | 128000 | Inactive | 2024-08-10 | 2025-03-18 | City Planning Delays | Urban Innovation Summit
+88. Jeremiah Patterson | Language Learning AI | 89000 | Inactive | 2024-08-27 | 2025-01-05 | Educational Budget Cuts | EdTech Conference
+89. Felicia Armstrong | Climate Modeling | 131000 | Inactive | 2024-09-13 | 2025-04-20 | Research Funding Reallocation | Climate Science Summit
 90. Conrad Hughes | Waste Management Tech | 104000 | Inactive | 2024-09-30 | 2025-04-05 | Environmental Regulations | Waste Management Expo
-91. Sheila Fisher | Digital Therapeutics | 113000 | Active | 2024-10-17 | N/A | N/A | Digital Health Summit
-92. Randolph Stone | Smart Parking Solutions | 77000 | Active | 2024-11-03 | N/A | N/A | Smart Transportation Conference
-93. Tamara Schmidt | Music Recommendation | 72000 | Active | 2024-11-20 | N/A | N/A | Music Technology Summit
-94. Dwight Fuller | Mental Health Analytics | 98000 | Active | 2024-12-07 | N/A | N/A | Mental Health Tech Conference
-95. Bridget Gilbert | Sustainable Fashion | 83000 | Active | 2024-12-24 | N/A | N/A | Sustainable Fashion Summit
-96. Cedric Marshall | Maritime Safety | 136000 | Active | 2025-01-10 | N/A | N/A | Maritime Safety Conference
-97. Yvonne Hunter | Wildlife Tracking | 92000 | Active | 2025-01-27 | N/A | N/A | Wildlife Technology Summit
-98. Earnest Mills | Smart Irrigation | 107000 | Active | 2025-02-13 | N/A | N/A | Agricultural Innovation Fair
-99. Claudia Boyd | Virtual Reality Therapy | 85000 | Active | 2025-03-02 | N/A | N/A | VR Healthcare Summit
+91. Sheila Fisher | Digital Therapeutics | 113000 | Inactive | 2024-10-17 | 2025-02-28 | Clinical Trial Delays | Digital Health Summit
+92. Randolph Stone | Smart Parking Solutions | 77000 | Inactive | 2024-11-03 | 2025-03-12 | Municipal Contract Changes | Smart Transportation Conference
+93. Tamara Schmidt | Music Recommendation | 72000 | Inactive | 2024-11-20 | 2025-04-08 | Streaming Service Changes | Music Technology Summit
+94. Dwight Fuller | Mental Health Analytics | 98000 | Inactive | 2024-12-07 | 2025-05-15 | Patient Privacy Regulations | Mental Health Tech Conference
+95. Bridget Gilbert | Sustainable Fashion | 83000 | Inactive | 2024-12-24 | 2025-04-30 | Supply Chain Sustainability Issues | Sustainable Fashion Summit
+96. Cedric Marshall | Maritime Safety | 136000 | Inactive | 2025-01-10 | 2025-06-18 | International Maritime Regulations | Maritime Safety Conference
+97. Yvonne Hunter | Wildlife Tracking | 92000 | Inactive | 2025-01-27 | 2025-07-05 | Conservation Funding Cuts | Wildlife Technology Summit
+98. Earnest Mills | Smart Irrigation | 107000 | Inactive | 2025-02-13 | 2025-06-22 | Water Rights Issues | Agricultural Innovation Fair
+99. Claudia Boyd | Virtual Reality Therapy | 85000 | Inactive | 2025-03-02 | 2025-07-10 | Insurance Coverage Denial | VR Healthcare Summit
 100. Roderick Knight | Precision Medicine | 154000 | Active | 2025-03-19 | N/A | N/A | Precision Medicine Conference
 101. Sonya Pierce | Digital Twin Technology | 141000 | Active | 2025-04-05 | N/A | N/A | Digital Twin Summit
 102. Angelo Washington | Crop Disease Detection | 99000 | Active | 2025-04-22 | N/A | N/A | Agricultural AI Conference
@@ -206,8 +206,8 @@ FORMAT: Name | Industry | Revenue Generated ($) | Status | Date Joined | Leave D
 200. Gail Owens | Smart Ecosystem Health | 116000 | Active | 2025-04-18 | N/A | N/A | Ecosystem Health Technology Summit
 
 SUMMARY STATISTICS:
-Total Active Customers: 173 (86.5%)
-Total Inactive Customers: 27 (13.5%)
+Total Active Customers: 72 (36%)
+Total Inactive Customers: 128 (64%)
 Average Revenue per Customer: $99,485
 Total Revenue Generated: $19,897,000
 
@@ -235,14 +235,18 @@ INDUSTRY DISTRIBUTION:
 - Other Industries: 4 customers (2%)
 
 REASON FOR LEAVING (Inactive Customers):
-- Budget Constraints: 6 customers
-- Switched to Competitor: 5 customers
-- Technical Issues/Limitations: 4 customers
-- Company Restructuring/Merger: 3 customers
-- Regulatory/Compliance Issues: 3 customers
-- Market/Industry Changes: 3 customers
-- Platform/System Migration: 2 customers
-- Resource Constraints: 1 customer
+- Budget Constraints/Funding Issues: 18 customers
+- Technology/Platform Changes: 16 customers
+- Regulatory/Compliance Issues: 15 customers
+- Market/Industry Changes: 14 customers
+- Company Restructuring/Merger: 12 customers
+- Switched to Competitor: 11 customers
+- Technical Issues/Limitations: 10 customers
+- Contract Non-Renewal: 9 customers
+- Policy/Legal Changes: 8 customers
+- Performance/Accuracy Issues: 6 customers
+- Security/Privacy Concerns: 5 customers
+- Environmental/Sustainability Issues: 4 customers
 
 Data Generation Notes:
 - All revenue figures are in USD
