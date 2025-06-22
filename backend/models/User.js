@@ -5,15 +5,7 @@ const userSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
-  },
-  username: {
-    type: String,
-    unique: true,
-    sparse: true, // Allow null values but ensure uniqueness when present
-    trim: true,
-    lowercase: true,
-  },
-  email: {
+  },  email: {
     type: String,
     required: true,
     unique: true,
@@ -27,18 +19,10 @@ const userSchema = new mongoose.Schema({
   },
   role: {
     type: String,
-    enum: ["admin", "trainee", "user"], // Added 'user' for SME functionality
+    enum: ["admin", "trainee"],
     default: "trainee",
   },
-  lastLogin: {
-    type: Date,
-    default: null,
-  },
   createdAt: {
-    type: Date,
-    default: Date.now,
-  },
-  updatedAt: {
     type: Date,
     default: Date.now,
   },
@@ -46,9 +30,6 @@ const userSchema = new mongoose.Schema({
 
 // Hash the password before saving
 userSchema.pre("save", async function (next) {
-  // Update timestamp
-  this.updatedAt = new Date();
-  
   if (!this.isModified("password")) return next();
 
   try {
