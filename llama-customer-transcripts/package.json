@@ -7,8 +7,13 @@
     "build": "tsc",
     "start": "node dist/index.js",
     "dev": "ts-node src/index.ts",
+    "demo": "ts-node src/demo.ts",
     "test": "ts-node src/test.ts",
     "test:llama": "ts-node src/test.ts",
+    "test:enhanced": "ts-node src/test_enhanced.ts",
+    "test:comprehensive": "ts-node src/test_enhanced.ts",
+    "test:multistage": "ts-node src/test_multistage.ts",
+    "test:cot": "ts-node src/test_cot.ts",
     "clean": "rimraf dist"
   },
   "keywords": ["llama", "knowledge-graph", "sales", "mongodb", "typescript"],

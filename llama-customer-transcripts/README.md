@@ -1,6 +1,50 @@
 # Llama Knowledge Graph Generator
 
-A TypeScript application that fetches sales transcript data from MongoDB and uses the Llama API to generate knowledge graphs representing insights about successful vs unsuccessful sales interactions.
+A sophisticated Sales LMS component that leverages Llama API best practices to generate comprehensive knowledge graphs from sales conversation transcripts. This system transforms raw sales data into actionable coaching insights using advanced AI analysis techniques.
+
+## 📚 Sales LMS Integration
+
+### Project Context
+This Llama Knowledge Graph Generator is a key component of a comprehensive **Learning Management System (LMS) for sales training** with AI features. The broader Sales LMS system includes:
+
+- **Backend**: Node.js with Express, MongoDB via Mongoose, JWT authentication, and OpenAI integration
+- **Frontend**: React.js with React Bootstrap, React Router, React Quill editor  
+- **User Roles**: 
+  - **Admin** (content creators) - Create AI-generated learning modules
+  - **Trainee** (sales hires) - Access modules and interact with AI chatbot
+- **AI Features**: Content generation and conversational AI chatbot
+
+### Architecture Integration
+The knowledge graph generator follows the Sales LMS **controller-service pattern**:
+
+```typescript
+// Example integration with Sales LMS
+export class KnowledgeGraphController {
+  constructor(private knowledgeGraphService: LlamaKnowledgeGraphService) {}
+  
+  async generateInsights(req: Request, res: Response) {
+    try {
+      const { transcripts, product } = req.body;
+      const knowledgeGraph = await this.knowledgeGraphService
+        .generateKnowledgeGraphMultiStage(product, transcripts);
+      
+      res.json({ success: true, data: knowledgeGraph });
+    } catch (error) {
+      res.status(500).json({ success: false, error: error.message });
+    }
+  }
+}
+```
+
+### Sales LMS Code Patterns
+This component maintains consistency with Sales LMS standards:
+
+- **RESTful API endpoints** with controller-service pattern
+- **Consistent error handling** with try-catch blocks throughout
+- **Input validation** on both conversation data and generated insights
+- **Modular component structure** for maintainability
+- **Context API integration** for state management (when used in frontend)
+- **Protected routes** based on user roles (admin access for analytics)
 
 ## Features
 

@@ -18,14 +18,12 @@ build/
 # TypeScript
 *.tsbuildinfo
 
-# Output files
+# Output files and debugging
 output/
+raw_outputs/
 *.json
 !package.json
 !tsconfig.json
-
-# Logs
-logs/
 *.log
 
 # Runtime data

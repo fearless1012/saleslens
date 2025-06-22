@@ -2,7 +2,7 @@ import * as dotenv from 'dotenv';
 import { MongoDBService } from './mongoService';
 import { LlamaKnowledgeGraphService } from './llamaService';
 import { FileService } from './fileService';
-import { SalesTranscript, KnowledgeGraph } from './types';
+import { SalesTranscript } from './types';
 
 // Load environment variables
 dotenv.config();
@@ -52,7 +52,7 @@ class KnowledgeGraphGenerator {
     };
   }
 
-  async generateKnowledgeGraphForProduct(product: string, useStreaming: boolean = false): Promise<KnowledgeGraph> {
+  async generateKnowledgeGraphForProduct(product: string, useStreaming: boolean = false): Promise<any> {
     console.log(`\n=== Processing Product: ${product} ===`);
     
     try {
@@ -71,9 +71,7 @@ class KnowledgeGraphGenerator {
       console.log(`Unsuccessful: ${processedTranscripts.filter(t => t.result === 'unsuccessful').length}`);
 
       // Generate knowledge graph using Llama
-      const knowledgeGraph = useStreaming 
-        ? await this.llamaService.generateKnowledgeGraphStreaming(product, processedTranscripts)
-        : await this.llamaService.generateKnowledgeGraph(product, processedTranscripts);
+      const knowledgeGraph = await this.llamaService.generateKnowledgeGraph(product, processedTranscripts);
 
       return knowledgeGraph;
     } catch (error) {
@@ -82,14 +80,14 @@ class KnowledgeGraphGenerator {
     }
   }
 
-  async generateKnowledgeGraphsForAllProducts(useStreaming: boolean = false): Promise<KnowledgeGraph[]> {
+  async generateKnowledgeGraphsForAllProducts(useStreaming: boolean = false): Promise<any[]> {
     console.log('\n=== Generating Knowledge Graphs for All Products ===');
     
     try {
       await this.mongoService.connect();
       
       const products = await this.mongoService.getAllProducts();
-      const results: KnowledgeGraph[] = [];
+      const results: any[] = [];
 
       for (const product of products) {
         try {
@@ -115,7 +113,7 @@ class KnowledgeGraphGenerator {
   async generateKnowledgeGraphForSpecificProduct(
     product: string, 
     useStreaming: boolean = false
-  ): Promise<KnowledgeGraph> {
+  ): Promise<any> {
     console.log(`\n=== Generating Knowledge Graph for Product: ${product} ===`);
     
     try {

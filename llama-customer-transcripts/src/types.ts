@@ -38,6 +38,8 @@ export interface KnowledgeGraph {
     successfulCount: number;
     unsuccessfulCount: number;
     generatedAt: string;
+    analysisDepth?: string;
+    insightLevel?: string;
   };
   nodes: KnowledgeGraphNode[];
   edges: KnowledgeGraphEdge[];
@@ -46,6 +48,8 @@ export interface KnowledgeGraph {
     failureFactors: string[];
     keyPatterns: string[];
     recommendations: string[];
+    psychologicalInsights?: string[];
+    coachingOpportunities?: string[];
   };
 }
 
