@@ -45,8 +45,8 @@ export async function urlPresentation(id: string): Promise<any> {
 if (require.main === module) {
   (async () => {
     console.log("Generating presentation...");
-    // const result = await generatePresentations("Introduction to llama api");
-    const result = {id: "XL27aLWQOlwfpIMdQbmo", download: true, embed: true}; // Mocked result for testing
+    const result = await generatePresentations("Introduction to mata and the llama api");
+    // const result = {id: "XL27aLWQOlwfpIMdQbmo", download: true, embed: true}; // Mocked result for testing
     console.log(result.id);
 
     // if (result.embed){
