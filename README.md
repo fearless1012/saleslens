@@ -1,4 +1,12 @@
-# SalesLens API - Backend Setup Guide
+# SalesLens
+<img src="https://github.com/fearless1012/saleslens/blob/main/SalesLens-01.png">
+
+SalesLens is a smart Learning Management System that supports new sales hire to gain domain knowledge, learn about the customers and practice pitching the product to a customer.
+By combining the intelligence of LLaMA 4 for learning module generation, customer profile modeling and pitch generation based on this knowledge base, Hume AI for real-time emotional feedback, and SlidesGPT for visual content generation, our platform helps companies:
+Create interactive modules on product/domain knowledge
+Build and analyze customer personas and profiles
+Auto-generate personalized sales pitches based on both
+And let sales reps practice live, with AI that gives feedback on tone, clarity, and confidence
 
 ## Overview
 
@@ -120,6 +128,11 @@ saleslens-api/
 ├── package.json
 └── tsconfig.json
 ```
+##For Future iteration: 
+
+We could implement some web scraping to create more aligned pitches for a customer
+Make an AI chatbot to ask questions about the modules and customers
+Make an interactive AI to talk on a video for Sales pitch practice
 
 ## File Storage
 
@@ -128,6 +141,9 @@ All uploaded files are stored in the following directories:
 - Domain Knowledge: `/uploads/domain-knowledge/`
 - Customer CSV Imports: `/uploads/customers/`
 - Pitches: `/uploads/pitches/`
+
+
+  
 
 These directories are automatically created when the server starts.
 
