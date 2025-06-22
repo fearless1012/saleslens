@@ -7,6 +7,7 @@ Create interactive modules on product/domain knowledge
 Build and analyze customer personas and profiles
 Auto-generate personalized sales pitches based on both
 And let sales reps practice live, with AI that gives feedback on tone, clarity, and confidence
+
 Demo Video - https://youtu.be/Lv1TLzeSgX0
 ## Overview
 
