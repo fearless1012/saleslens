@@ -129,7 +129,7 @@ saleslens-api/
 ├── package.json
 └── tsconfig.json
 ```
-##For Future iteration: 
+## For Future iteration: 
 
 We could implement some web scraping to create more aligned pitches for a customer
 Make an AI chatbot to ask questions about the modules and customers
