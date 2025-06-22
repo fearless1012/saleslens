@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { MainLayout } from "@/components/ui";
-import { transcriptAPI } from "@/api";
+import { transcriptAPI, practiceChatAPI } from "@/api";
 import {
   exampleCustomerProfiles,
   pitchTypeDescriptions,
@@ -16,6 +16,13 @@ interface SentimentData {
   anxiety: number;
   happy: number;
   doubt: number;
+}
+
+interface SentimentAnalysis {
+  anxiety: number;
+  confidence: number;
+  doubt: number;
+  analysis: string;
 }
 
 interface CustomerProfileForm {
@@ -35,6 +42,8 @@ const Practice: React.FC = () => {
     happy: 65,
     doubt: 25,
   });
+  const [sentimentAnalysis, setSentimentAnalysis] =
+    useState<SentimentAnalysis | null>(null);
 
   // Customer profile form state
   const [customerForm, setCustomerForm] = useState<CustomerProfileForm>({
@@ -87,12 +96,14 @@ Jennifer: Let's schedule a demo with my analytics team. This could be exactly wh
         setTranscript(generatedTranscript);
         setShowForm(false);
 
-        // Initialize conversation with some context
+        // Initialize conversation with context about the customer persona
         setConversation([
           {
             speaker: "AI",
-            message:
-              "I've generated a new sales pitch transcript based on your customer profile. You can now practice by asking questions or discussing the pitch techniques used in this scenario.",
+            message: `Hello! I'm ${
+              customerForm.customerProfile.split(".")[0].split(",")[0] ||
+              "your customer"
+            }. I've reviewed the transcript you generated, and I'm ready to discuss this sales scenario. I'll respond based on my company profile and the data uploaded to the system. What would you like to discuss about this pitch approach?`,
             id: "intro-1",
           },
         ]);
@@ -145,9 +156,21 @@ Jennifer: Let's schedule a demo with my analytics team. This could be exactly wh
     });
   };
 
-  // Initialize conversation with some AI responses
+  // Initialize conversation with customer persona
   useEffect(() => {
-    if (!showForm) {
+    if (!showForm && customerForm.customerProfile) {
+      const initialConversation: ConversationItem[] = [
+        {
+          speaker: "AI",
+          message: `Hello! I'm representing ${
+            customerForm.customerProfile.split(".")[0].split(",")[0] ||
+            "the customer"
+          }. I've reviewed the sales approach in this transcript and I'm ready to discuss it from my perspective as a potential customer. Feel free to ask me questions about my needs, concerns, or thoughts on the sales techniques used. What would you like to know?`,
+          id: "1",
+        },
+      ];
+      setConversation(initialConversation);
+    } else if (!showForm) {
       const initialConversation: ConversationItem[] = [
         {
           speaker: "AI",
@@ -158,9 +181,9 @@ Jennifer: Let's schedule a demo with my analytics team. This could be exactly wh
       ];
       setConversation(initialConversation);
     }
-  }, [showForm]);
+  }, [showForm, customerForm.customerProfile]);
 
-  const handleSendMessage = () => {
+  const handleSendMessage = async () => {
     if (!currentMessage.trim()) return;
 
     setIsLoading(true);
@@ -172,48 +195,150 @@ Jennifer: Let's schedule a demo with my analytics team. This could be exactly wh
       id: Date.now().toString(),
     };
 
-    setConversation((prev) => [...prev, userMessage]);
+    const newConversation = [...conversation, userMessage];
+    setConversation(newConversation);
+
+    const messageToSend = currentMessage;
     setCurrentMessage("");
 
-    // Simulate AI response
-    setTimeout(() => {
-      const contextualResponses = [
-        "That's a great observation! In successful sales conversations, it's important to focus on the customer's specific pain points. What other techniques did you notice in this transcript?",
-        "Excellent question! The key here is building rapport and trust before diving into the product features. How would you approach building that initial connection?",
-        "You're right to focus on that part of the conversation. Active listening and asking follow-up questions are crucial. What would you ask next in this scenario?",
-        "That's a good insight about objection handling. The sales rep demonstrated patience and provided specific value propositions. How would you handle a price objection?",
-        "Great point about the closing technique! Notice how the sales rep suggested a demo rather than pushing for an immediate decision. What are your thoughts on this approach?",
-      ];
+    // Initialize response tracking
+    let chatSucceeded = false;
+    let sentimentSucceeded = false;
 
-      const aiResponse: ConversationItem = {
-        speaker: "AI",
-        message:
-          contextualResponses[
-            Math.floor(Math.random() * contextualResponses.length)
-          ],
-        id: (Date.now() + 1).toString(),
-      };
+    try {
+      // Analyze sentiment of the user's message in parallel with getting AI response
+      const sentimentPromise = practiceChatAPI
+        .analyzeSentiment({
+          message: messageToSend,
+          context: {
+            customerProfile: customerForm.customerProfile,
+            industryFocus: customerForm.industryFocus,
+            pitchType: customerForm.pitchType,
+          },
+        })
+        .catch((error) => {
+          console.log("❌ Sentiment API error:", error);
+          return { data: { status: "error", message: error.message } };
+        });
 
-      setConversation((prev) => [...prev, aiResponse]);
+      // Prepare conversation history for API
+      const conversationHistory = newConversation.map((item) => ({
+        role:
+          item.speaker === "You" ? ("user" as const) : ("assistant" as const),
+        content: item.message,
+      }));
 
-      // Update sentiment analysis with some random variation
-      setSentimentData({
-        anxiety: Math.max(
-          0,
-          Math.min(100, sentimentData.anxiety + (Math.random() - 0.5) * 20)
-        ),
-        happy: Math.max(
-          0,
-          Math.min(100, sentimentData.happy + (Math.random() - 0.5) * 20)
-        ),
-        doubt: Math.max(
-          0,
-          Math.min(100, sentimentData.doubt + (Math.random() - 0.5) * 20)
-        ),
-      });
+      // Call the RAG-powered chat API
+      const responsePromise = practiceChatAPI
+        .respond({
+          message: messageToSend,
+          customerProfile: customerForm.customerProfile,
+          conversationHistory: conversationHistory.slice(0, -1), // Exclude the current message
+          industryFocus: customerForm.industryFocus,
+          specificProducts: customerForm.specificProducts,
+          pitchType: customerForm.pitchType,
+        })
+        .catch((error) => {
+          console.log("❌ Chat API error:", error);
+          return { data: { status: "error", message: error.message } };
+        });
 
-      setIsLoading(false);
-    }, 1500);
+      // Wait for both sentiment analysis and AI response
+      const [sentimentResponse, chatResponse] = await Promise.all([
+        sentimentPromise,
+        responsePromise,
+      ]);
+
+      console.log("📡 Chat API Response:", chatResponse);
+      console.log("📊 Sentiment API Response:", sentimentResponse);
+
+      // Handle sentiment analysis
+      if (
+        sentimentResponse.data &&
+        sentimentResponse.data.status === "success"
+      ) {
+        const sentiment = sentimentResponse.data.data.sentiment;
+        setSentimentData({
+          anxiety: sentiment.anxiety,
+          happy: sentiment.confidence, // Map confidence to happy
+          doubt: sentiment.doubt,
+        });
+
+        // Store the detailed analysis
+        setSentimentAnalysis(sentiment);
+
+        console.log("🎭 Sentiment analysis result:", sentiment);
+        sentimentSucceeded = true;
+      } else {
+        console.log("❌ Sentiment analysis failed:", sentimentResponse.data);
+      }
+
+      // Handle chat response - this is the critical part
+      if (chatResponse.data && chatResponse.data.status === "success") {
+        const aiResponse: ConversationItem = {
+          speaker: "AI",
+          message: chatResponse.data.data.response,
+          id: (Date.now() + 1).toString(),
+        };
+
+        setConversation((prev) => [...prev, aiResponse]);
+        console.log("✅ AI response added:", aiResponse.message);
+        chatSucceeded = true;
+      } else {
+        console.log("❌ Chat response failed:", chatResponse.data);
+      }
+
+      // Only show fallback if both APIs completely failed
+      if (!chatSucceeded) {
+        throw new Error("Chat API failed to return a valid response");
+      }
+    } catch (error: any) {
+      console.error("Error in message handling:", error);
+
+      // Only show fallback if we didn't get a successful chat response
+      if (!chatSucceeded) {
+        const contextualResponses = [
+          "I'm having trouble connecting right now, but I'm here to help with your sales practice.",
+          "Let me think about that for a moment...",
+          "Could you rephrase that question? I want to make sure I understand your sales scenario correctly.",
+          "That's an interesting approach. Tell me more about your strategy.",
+          "I'm processing your message. In the meantime, what's your main concern with this customer interaction?",
+        ];
+
+        const fallbackResponse: ConversationItem = {
+          speaker: "AI",
+          message:
+            contextualResponses[
+              Math.floor(Math.random() * contextualResponses.length)
+            ],
+          id: (Date.now() + 1).toString(),
+        };
+
+        setConversation((prev) => [...prev, fallbackResponse]);
+        console.log("⚠️ Using fallback response due to API error");
+      }
+
+      // Fallback sentiment analysis with some dynamic variation if sentiment failed
+      if (!sentimentSucceeded) {
+        setSentimentData((prev) => ({
+          anxiety: Math.max(
+            0,
+            Math.min(100, prev.anxiety + (Math.random() - 0.5) * 15)
+          ),
+          happy: Math.max(
+            0,
+            Math.min(100, prev.happy + (Math.random() - 0.5) * 15)
+          ),
+          doubt: Math.max(
+            0,
+            Math.min(100, prev.doubt + (Math.random() - 0.5) * 15)
+          ),
+        }));
+        console.log("⚠️ Using fallback sentiment analysis");
+      }
+    }
+
+    setIsLoading(false);
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -475,6 +600,25 @@ Jennifer: Let's schedule a demo with my analytics team. This could be exactly wh
                   className="w-24 h-24 rounded-full object-cover border-4 border-blue-100"
                 />
               </div>
+              <div className="text-center">
+                <h3 className="font-semibold text-gray-900 mb-1">
+                  AI Customer Persona
+                </h3>
+                <p className="text-sm text-gray-600 mb-2">
+                  {customerForm.industryFocus || "General Business"}
+                </p>
+                <div className="text-xs text-gray-500">
+                  <div>Pitch Type: {customerForm.pitchType}</div>
+                  {customerForm.specificProducts.length > 0 && (
+                    <div className="mt-1">
+                      Products: {customerForm.specificProducts.join(", ")}
+                    </div>
+                  )}
+                </div>
+                <div className="mt-2 text-xs bg-blue-50 text-blue-700 px-2 py-1 rounded">
+                  Powered by RAG on uploaded data
+                </div>
+              </div>
             </div>
 
             {/* Conversation Area */}
@@ -544,18 +688,27 @@ Jennifer: Let's schedule a demo with my analytics team. This could be exactly wh
                   value={currentMessage}
                   onChange={(e) => setCurrentMessage(e.target.value)}
                   onKeyPress={handleKeyPress}
-                  placeholder="Type your message..."
+                  placeholder="Type your sales message for real-time sentiment analysis..."
                   className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   disabled={isLoading}
                 />
                 <button
                   onClick={handleSendMessage}
                   disabled={isLoading || !currentMessage.trim()}
-                  className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center space-x-2"
                 >
-                  Send
+                  {isLoading && (
+                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                  )}
+                  <span>{isLoading ? "Analyzing..." : "Send"}</span>
                 </button>
               </div>
+              {isLoading && (
+                <div className="mt-2 text-xs text-gray-500 flex items-center space-x-1">
+                  <div className="w-3 h-3 border border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+                  <span>AI analyzing sentiment and generating response...</span>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -563,100 +716,160 @@ Jennifer: Let's schedule a demo with my analytics team. This could be exactly wh
         {/* Right Panel - Sentiment Analysis */}
         <div className="col-span-4">
           <div className="bg-gradient-to-b from-blue-400 to-blue-600 rounded-lg p-6 h-full text-white">
-            <h2 className="text-2xl font-bold mb-4">Sentiment Analysis</h2>
+            <h2 className="text-2xl font-bold mb-4">
+              Real-Time Sentiment Analysis
+            </h2>
             <div className="bg-white bg-opacity-10 rounded-lg p-4 mb-6">
               <p className="text-sm text-blue-100 leading-relaxed">
-                Practice your sales skills with AI-generated transcripts. This
-                sentiment analysis shows your practice session performance and
-                provides personalized recommendations for improvement.
+                AI-powered sentiment analysis of your sales communication using
+                LLaMA. Analysis updates in real-time based on your message tone,
+                confidence, and approach.
               </p>
-            </div>{" "}
+            </div>
+
+            {/* Sentiment Analysis Results */}
+            {sentimentAnalysis && (
+              <div className="bg-white bg-opacity-10 rounded-lg p-4 mb-6">
+                <h3 className="font-semibold text-white mb-2">
+                  Latest Analysis
+                </h3>
+                <p className="text-sm text-blue-100 leading-relaxed">
+                  {sentimentAnalysis.analysis}
+                </p>
+                <div className="mt-3 text-xs text-blue-200">
+                  Analyzed using LLaMA AI • {new Date().toLocaleTimeString()}
+                </div>
+              </div>
+            )}
+
             {/* Sentiment Bars */}
             <div className="space-y-6">
               <div>
                 <div className="flex justify-between items-center mb-2">
-                  <span className="text-blue-100 font-medium">Anxiety</span>
+                  <span className="text-blue-100 font-medium">
+                    Anxiety/Nervousness
+                  </span>
                   <span className="text-white font-semibold">
                     {Math.round(sentimentData.anxiety)}%
                   </span>
                 </div>
                 <div className="w-full bg-white bg-opacity-20 rounded-full h-3">
                   <div
-                    className={`bg-red-400 h-3 rounded-full transition-all duration-500 ${
-                      sentimentData.anxiety <= 20
-                        ? "w-[20%]"
-                        : sentimentData.anxiety <= 40
-                        ? "w-[40%]"
-                        : sentimentData.anxiety <= 60
-                        ? "w-[60%]"
-                        : sentimentData.anxiety <= 80
-                        ? "w-[80%]"
-                        : "w-full"
-                    }`}
+                    className="bg-red-400 h-3 rounded-full transition-all duration-1000 ease-in-out"
+                    style={{
+                      width: `${Math.min(
+                        100,
+                        Math.max(0, sentimentData.anxiety)
+                      )}%`,
+                    }}
                   ></div>
+                </div>
+                <div className="text-xs text-blue-200 mt-1">
+                  {sentimentData.anxiety > 70
+                    ? "High - Consider slowing down and building confidence"
+                    : sentimentData.anxiety > 40
+                    ? "Moderate - Focus on preparation and key points"
+                    : "Low - Good confidence level"}
                 </div>
               </div>
 
               <div>
                 <div className="flex justify-between items-center mb-2">
-                  <span className="text-blue-100 font-medium">Confidence</span>
+                  <span className="text-blue-100 font-medium">
+                    Confidence/Enthusiasm
+                  </span>
                   <span className="text-white font-semibold">
                     {Math.round(sentimentData.happy)}%
                   </span>
                 </div>
                 <div className="w-full bg-white bg-opacity-20 rounded-full h-3">
                   <div
-                    className={`bg-green-400 h-3 rounded-full transition-all duration-500 ${
-                      sentimentData.happy <= 20
-                        ? "w-[20%]"
-                        : sentimentData.happy <= 40
-                        ? "w-[40%]"
-                        : sentimentData.happy <= 60
-                        ? "w-[60%]"
-                        : sentimentData.happy <= 80
-                        ? "w-[80%]"
-                        : "w-full"
-                    }`}
+                    className="bg-green-400 h-3 rounded-full transition-all duration-1000 ease-in-out"
+                    style={{
+                      width: `${Math.min(
+                        100,
+                        Math.max(0, sentimentData.happy)
+                      )}%`,
+                    }}
                   ></div>
+                </div>
+                <div className="text-xs text-blue-200 mt-1">
+                  {sentimentData.happy > 70
+                    ? "Excellent - Strong, confident communication"
+                    : sentimentData.happy > 40
+                    ? "Good - Maintain this positive energy"
+                    : "Low - Focus on value proposition and benefits"}
                 </div>
               </div>
 
               <div>
                 <div className="flex justify-between items-center mb-2">
-                  <span className="text-blue-100 font-medium">Uncertainty</span>
+                  <span className="text-blue-100 font-medium">
+                    Doubt/Uncertainty
+                  </span>
                   <span className="text-white font-semibold">
                     {Math.round(sentimentData.doubt)}%
                   </span>
                 </div>
                 <div className="w-full bg-white bg-opacity-20 rounded-full h-3">
                   <div
-                    className={`bg-yellow-400 h-3 rounded-full transition-all duration-500 ${
-                      sentimentData.doubt <= 20
-                        ? "w-[20%]"
-                        : sentimentData.doubt <= 40
-                        ? "w-[40%]"
-                        : sentimentData.doubt <= 60
-                        ? "w-[60%]"
-                        : sentimentData.doubt <= 80
-                        ? "w-[80%]"
-                        : "w-full"
-                    }`}
+                    className="bg-yellow-400 h-3 rounded-full transition-all duration-1000 ease-in-out"
+                    style={{
+                      width: `${Math.min(
+                        100,
+                        Math.max(0, sentimentData.doubt)
+                      )}%`,
+                    }}
                   ></div>
+                </div>
+                <div className="text-xs text-blue-200 mt-1">
+                  {sentimentData.doubt > 70
+                    ? "High - Address concerns with specific examples"
+                    : sentimentData.doubt > 40
+                    ? "Moderate - Provide more concrete details"
+                    : "Low - Clear and convincing communication"}
                 </div>
               </div>
             </div>
-            {/* Recommendations */}
+
+            {/* AI-Powered Recommendations */}
             <div className="mt-8 bg-white bg-opacity-10 rounded-lg p-4">
-              <h3 className="font-semibold text-white mb-3">Practice Tips</h3>
+              <h3 className="font-semibold text-white mb-3">
+                AI Coaching Tips
+              </h3>
               <div className="space-y-2 text-sm text-blue-100">
+                {sentimentData.anxiety > 50 && (
+                  <p>
+                    • 🧘 Take a breath and slow down your pace to reduce
+                    nervousness
+                  </p>
+                )}
+                {sentimentData.happy < 50 && (
+                  <p>
+                    • 🔥 Focus more on benefits and positive outcomes for the
+                    customer
+                  </p>
+                )}
+                {sentimentData.doubt > 50 && (
+                  <p>
+                    • 📊 Use specific data, case studies, or examples to build
+                    credibility
+                  </p>
+                )}
+                {sentimentData.anxiety < 30 && sentimentData.happy > 70 && (
+                  <p>
+                    • ✨ Excellent confidence! Maintain this energy and
+                    enthusiasm
+                  </p>
+                )}
                 <p>
-                  • Ask more discovery questions to understand customer needs
+                  • 🎯 Ask discovery questions to better understand customer
+                  needs
                 </p>
                 <p>
-                  • Practice active listening and acknowledge customer concerns
+                  • 👂 Practice active listening and acknowledge customer
+                  concerns
                 </p>
-                <p>• Focus on value proposition rather than just features</p>
-                <p>• Handle objections with empathy and specific examples</p>
               </div>
             </div>
           </div>

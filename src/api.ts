@@ -124,4 +124,28 @@ export const transcriptAPI = {
   getHistory: (params?: any) => api.get("/transcripts/history", { params }),
 };
 
+// Practice Chat APIs
+export const practiceChatAPI = {
+  respond: (data: {
+    message: string;
+    customerProfile: string;
+    conversationHistory?: Array<{
+      role: "user" | "assistant";
+      content: string;
+    }>;
+    industryFocus?: string;
+    specificProducts?: string[];
+    pitchType?: "discovery" | "demo" | "proposal" | "closing";
+  }) => api.post("/practice-chat/respond", data),
+
+  analyzeSentiment: (data: {
+    message: string;
+    context?: {
+      customerProfile?: string;
+      industryFocus?: string;
+      pitchType?: "discovery" | "demo" | "proposal" | "closing";
+    };
+  }) => api.post("/practice-chat/sentiment-analysis", data),
+};
+
 export default api;
