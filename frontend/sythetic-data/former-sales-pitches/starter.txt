@@ -1,0 +1,26 @@
+Date	Customer	Sales Rep	Product Pitch	Call Result	Transcript
+2022-02-10	John, CEO at TechCorp	Rachel Lee	Llama 4 AI Model	Successful Sale	Rachel: Hi John, Llama 4 can automate your customer support. John: That sounds great. Rachel: We can set up a trial.
+2020-05-15	Emily, Marketing Manager	David Kim	Llama 4 AI Model	Failed Sale	David: Llama 4 can generate content for you. Emily: We're happy with our current solution. David: Okay, maybe next time.
+2021-08-20	Michael, IT Manager	Sarah Patel	Llama 4 AI Model	Successful Sale	Sarah: Hi Michael, Llama 4 can help with data analysis. Michael: That would save us a lot of time. Sarah: We can customize it for you.
+2022-11-02	Sophia, HR Manager	Kevin White	Llama 4 AI Model	Failed Sale	Kevin: Llama 4 can assist with recruitment. Sophia: We're not looking to automate that process. Kevin: Okay, thanks for considering.
+2023-01-05	Olivia, Sales Manager	Mark Davis	Llama 4 AI Model	Successful Sale	Mark: Hi Olivia, Llama 4 can help with lead generation. Olivia: That sounds like it could be useful. Mark: We can set up a demo.
+2020-09-18	Ava, Product Manager	Rachel Lee	Llama 4 AI Model	Failed Sale	Rachel: Llama 4 can help with product descriptions. Ava: We're happy with our current team. Rachel: Okay, maybe next time.
+2021-04-12	Ethan, Finance Manager	David Kim	Llama 4 AI Model	Successful Sale	David: Hi Ethan, Llama 4 can assist with financial forecasting. Ethan: That would be a game-changer. David: We can customize it for you.
+2022-06-25	Liam, Operations Manager	Sarah Patel	Llama 4 AI Model	Failed Sale	Sarah: Llama 4 can help with supply chain management. Liam: We're not looking to automate that process. Sarah: Okay, thanks for considering.
+2023-03-10	Noah, Customer Support	Kevin White	Llama 4 AI Model	Successful Sale	Kevin: Hi Noah, Llama 4 can automate customer support. Noah: That would save us a lot of time. Kevin: We can set up a trial.
+2020-02-20	Isabella, Marketing Manager	Mark Davis	Llama 4 AI Model	Failed Sale	Mark: Llama 4 can generate content for you. Isabella: We're happy with our current solution. Mark: Okay, maybe next time.
+2021-09-15	Charlotte, Sales Manager	Rachel Lee	Llama 4 AI Model	Successful Sale	Rachel: Hi Charlotte, Llama 4 can help with lead generation. Charlotte: That sounds like it could be useful. Rachel: We can set up a demo.
+2022-01-28	Amelia, Product Manager	David Kim	Llama 4 AI Model	Failed Sale	David: Llama 4 can help with product descriptions. Amelia: We're happy with our current team. David: Okay, maybe next time.
+2023-05-02	Harper, Finance Manager	Sarah Patel	Llama 4 AI Model	Successful Sale	Sarah: Hi Harper, Llama 4 can assist with financial forecasting. Harper: That would be a game-changer. Sarah: We can customize it for you.
+2020-11-10	Evelyn, Operations Manager	Kevin White	Llama 4 AI Model	Failed Sale	Kevin: Llama 4 can help with supply chain management. Evelyn: We're not looking to automate that process. Kevin: Okay, thanks for considering.
+2021-06-18	Abigail, Customer Support	Mark Davis	Llama 4 AI Model	Successful Sale	Mark: Hi Abigail, Llama 4 can automate customer support. Abigail: That would save us a lot of time. Mark: We can set up a trial.
+2022-04-22	Emily, Marketing Manager	Rachel Lee	Llama 4 AI Model	Failed Sale	Rachel: Llama 4 can generate content for you. Emily: We're happy with our current solution. Rachel: Okay, maybe next time.
+2023-02-15	Jackson, Sales Manager	David Kim	Llama 4 AI Model	Successful Sale	David: Hi Jackson, Llama 4 can help with lead generation. Jackson: That sounds like it could be useful. David: We can set up a demo.
+2020-08-25	Lucas, Product Manager	Sarah Patel	Llama 4 AI Model	Failed Sale	Sarah: Llama 4 can help with product descriptions. Lucas: We're happy with our current team. Sarah: Okay, maybe next time.
+2021-03-05	Mason, Finance Manager	Kevin White	Llama 4 AI Model	Successful Sale	Kevin: Hi Mason, Llama 4 can assist with financial forecasting. Mason: That would be a game-changer. Kevin: We can customize it for you.
+2022-09-12	Alexander, Operations Manager	Mark Davis	Llama 4 AI Model	Failed Sale	Mark: Llama 4 can help with supply chain management. Alexander: We're not looking to automate that process. Mark: Okay, thanks for considering.
+2023-06-01	Gabriel, Customer Support	Rachel Lee	Llama 4 AI Model	Successful Sale	Rachel: Hi Gabriel, Llama 4 can automate customer support. Gabriel: That would save us a lot of time. Rachel: We can set up a trial.
+2020-04-18	Julian, Marketing Manager	David Kim	Llama 4 AI Model	Failed Sale	David: Llama 4 can generate content for you. Julian: We're happy with our current solution. David: Okay, maybe next time.
+2021-11-22	Caleb, Sales Manager	Sarah Patel	Llama 4 AI Model	Successful Sale	Sarah: Hi Caleb, Llama 4 can help with lead generation. Caleb: That sounds like it could be useful. Sarah: We can set up a demo.
+2022-07-28	Jaxon, Product Manager	Kevin White	Llama 4 AI Model	Failed Sale	Kevin: Llama 4 can help with product descriptions. Jaxon: We're happy with our current team. Kevin: Okay, maybe next time.
+2023-03-18	Hunter, Finance Manager	Mark Davis	Llama 4 AI Model	Successful Sale	Mark: Hi Hunter, Llama 4 can assist with financial forecasting. Hunter: That would be a game-changer. Mark: We can customize it for you.

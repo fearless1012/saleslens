@@ -5,8 +5,7 @@ const userSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
-  },
-  email: {
+  },  email: {
     type: String,
     required: true,
     unique: true,
@@ -16,6 +15,7 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true,
+    select: false, // Don't include password by default in queries
   },
   role: {
     type: String,
