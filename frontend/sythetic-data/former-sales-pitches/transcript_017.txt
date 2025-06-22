@@ -2,7 +2,7 @@ Date: 2024-03-23
 Customer: Michelle Thompson, Director of Operations at QuickMart Convenience Stores
 Sales Rep: Jason Lee
 Product: Llama 4 AI Model - Inventory Optimization & Demand Forecasting
-Call Result: Follow-up Required
+Call Result: Lost Sale - Pilot Program Declined
 Context: QuickMart operates 120 convenience stores and struggles with inventory management and waste.
 
 Transcript:
@@ -28,4 +28,8 @@ Michelle: I'm interested but need to see actual results. Do you have pilot progr
 
 Jason: Absolutely. We can start with 5-10 stores for a 90-day pilot. Would you be open to selecting a mix of your highest and lowest performing locations?
 
-Michelle: Yes, let's explore that option. Send me a pilot proposal.
+Michelle: I've thought about it more, and honestly, we're in the middle of a major system upgrade that will take all our IT resources for the next year. We can't take on any new technology implementations right now.
+
+Jason: I understand system upgrades are demanding. Could we perhaps schedule this pilot for next year when things settle down?
+
+Michelle: Maybe, but by then our priorities might have shifted. I think we'll need to pass for now.

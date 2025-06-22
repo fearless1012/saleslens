@@ -2,7 +2,7 @@ Date: 2024-03-29
 Customer: Robert Kim, Operations Director at PowerGrid Electric Utility
 Sales Rep: Hannah Davis
 Product: Llama 4 AI Model - Energy Grid Optimization & Demand Forecasting
-Call Result: Follow-up Required
+Call Result: Lost Sale - Regulatory Complexity
 Context: PowerGrid manages electrical distribution and needs better demand prediction and grid optimization.
 
 Transcript:
@@ -28,6 +28,8 @@ Robert: This sounds promising, but any changes to our grid systems require exten
 
 Hannah: We work closely with regulatory affairs teams and have experience with FERC, NERC, and state utility commission requirements. Implementation includes comprehensive testing phases.
 
-Robert: I'd need to involve our regulatory team and engineering staff. Can you present to a larger technical committee?
+Robert: After discussing this internally, the regulatory hurdles are too significant. Our compliance team estimates 18-24 months for approval, and we can't justify the risk and resource investment right now.
 
-Hannah: Absolutely. I'll arrange a comprehensive technical presentation with our utility specialists.
+Hannah: I understand utility regulations are complex. Would you consider a smaller pilot that doesn't require full regulatory approval?
+
+Robert: Unfortunately, even pilots require extensive documentation and approval. We'll need to pass on this opportunity for now.

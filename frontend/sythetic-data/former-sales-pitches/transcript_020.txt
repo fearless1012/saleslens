@@ -2,7 +2,7 @@ Date: 2024-03-26
 Customer: Patricia Anderson, Marketing Director at LuxuryTravel Agency
 Sales Rep: Ryan Taylor
 Product: Llama 4 AI Model - Personalized Travel Recommendations & Customer Insights
-Call Result: Follow-up Required
+Call Result: Lost Sale - Privacy Concerns
 Context: LuxuryTravel wants to improve customer experience with personalized recommendations and better understand traveler preferences.
 
 Transcript:
@@ -28,4 +28,8 @@ Patricia: I'm intrigued, but I'd need to see how this works with actual client d
 
 Ryan: Of course. We can arrange a demonstration using anonymized data that matches your client profiles. Would next week work for a deeper dive?
 
-Patricia: Yes, let's schedule that. I'd also like references from other luxury agencies.
+Patricia: Actually, after thinking about it more, I'm concerned about data privacy. Our ultra-high-net-worth clients are extremely sensitive about their travel patterns being analyzed, even anonymously.
+
+Ryan: I understand the privacy concerns. We have robust security measures and can discuss data isolation options.
+
+Patricia: I appreciate that, but I think the risk is too high for our business model. Our clients trust us precisely because we don't use their data for algorithmic analysis.
