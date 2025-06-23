@@ -4,7 +4,10 @@ npm-debug.log
 yarn-error.log
 yarn-debug.log
 .pnp
+
 .pnp.js
+
+.pptx
 
 # Environment variables
 .env
