@@ -75,6 +75,14 @@ export const customerAPI = {
   },
 
   delete: (id: string) => api.delete(`/upload/customer/${id}`),
+
+  // Generate customer profiles using AI
+  generateProfiles: (data: {
+    count?: number;
+    industries?: string[];
+    focusAreas?: string[];
+    analysisDepth?: "basic" | "detailed" | "comprehensive";
+  }) => api.post("/customers/generate-profiles", data),
 };
 
 // Sales Pitch Transcripts APIs

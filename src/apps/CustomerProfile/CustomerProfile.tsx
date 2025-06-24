@@ -1,7 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
 import Sidebar from "@/components/ui/Sidebar";
+import { customerAPI } from "@/api";
+
+interface CustomerProfileData {
+  company: string;
+  industry: string;
+  stage: string;
+  description: string;
+  position: string;
+  keyTraits: string[];
+  valueProposition: string[];
+  painPoints: string[];
+  objections: string[];
+  status: string;
+  tags: string[];
+}
 
 const CustomerProfile: React.FC = () => {
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [generatedProfiles, setGeneratedProfiles] = useState<
+    CustomerProfileData[]
+  >([]);
+  const [showGeneratedProfiles, setShowGeneratedProfiles] = useState(false);
+
   const customerData = {
     company: "Startups",
     description:
@@ -31,6 +52,39 @@ const CustomerProfile: React.FC = () => {
       '"Too early to spend on this"',
       '"How fast can we onboard?"',
     ],
+  };
+
+  const handleGenerateProfiles = async () => {
+    setIsGenerating(true);
+    try {
+      const response = await customerAPI.generateProfiles({
+        count: 3,
+        industries: [
+          "Technology",
+          "Healthcare",
+          "Finance",
+          "E-commerce",
+          "Manufacturing",
+        ],
+        focusAreas: ["Startups", "Enterprise", "SMB", "Growth Companies"],
+        analysisDepth: "detailed",
+      });
+
+      if (response.data.status === "success") {
+        setGeneratedProfiles(response.data.data.profiles);
+        setShowGeneratedProfiles(true);
+      } else {
+        console.error("Failed to generate profiles:", response.data.message);
+        alert("Failed to generate customer profiles. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error generating profiles:", error);
+      alert(
+        "An error occurred while generating customer profiles. Please try again."
+      );
+    } finally {
+      setIsGenerating(false);
+    }
   };
 
   return (
@@ -195,24 +249,38 @@ const CustomerProfile: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="bg-white rounded-lg shadow p-5 cursor-pointer flex flex-col justify-center items-center hover:shadow-md transition-all">
+                <div
+                  className="bg-white rounded-lg shadow p-5 cursor-pointer flex flex-col justify-center items-center hover:shadow-md transition-all"
+                  onClick={handleGenerateProfiles}
+                >
                   <div className="bg-blue-100 p-3 rounded-full mb-3">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-6 w-6 text-blue-600"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-                      />
-                    </svg>
+                    {isGenerating ? (
+                      <div className="animate-spin h-6 w-6 border-2 border-blue-600 rounded-full border-t-transparent"></div>
+                    ) : (
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-6 w-6 text-blue-600"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                        />
+                      </svg>
+                    )}
                   </div>
-                  <h3 className="font-medium text-lg">Create New</h3>
+                  <h3 className="font-medium text-lg">
+                    {isGenerating ? "Generating..." : "Create New"}
+                  </h3>
+                  {isGenerating && (
+                    <p className="text-sm text-gray-500 mt-1">
+                      Using AI to analyze customer data
+                    </p>
+                  )}
                 </div>
               </div>
 
@@ -243,6 +311,140 @@ const CustomerProfile: React.FC = () => {
                   </div>
                 </div>
               </div>
+
+              {/* Generated Profiles Section */}
+              {showGeneratedProfiles && generatedProfiles.length > 0 && (
+                <div className="mb-8">
+                  <div className="flex justify-between items-center mb-6">
+                    <h2 className="text-xl font-semibold text-gray-900">
+                      AI-Generated Customer Profiles
+                    </h2>
+                    <button
+                      onClick={() => setShowGeneratedProfiles(false)}
+                      className="text-gray-500 hover:text-gray-700"
+                      aria-label="Close generated profiles"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-5 w-5"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M6 18L18 6M6 6l12 12"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+
+                  <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 mb-8">
+                    {generatedProfiles.map((profile, index) => (
+                      <div
+                        key={index}
+                        className="bg-white rounded-lg shadow-lg overflow-hidden border-l-4 border-green-500"
+                      >
+                        <div className="bg-gradient-to-r from-green-400 to-green-600 p-4">
+                          <div className="flex items-center justify-between">
+                            <h3 className="text-lg font-semibold text-white">
+                              {profile.company}
+                            </h3>
+                            <span className="bg-white bg-opacity-20 text-white text-xs px-2 py-1 rounded-full">
+                              AI Generated
+                            </span>
+                          </div>
+                          <p className="text-green-100 text-sm mt-1">
+                            {profile.industry} • {profile.position}
+                          </p>
+                        </div>
+
+                        <div className="p-4">
+                          <div className="mb-4">
+                            <h4 className="font-medium text-gray-900 mb-1">
+                              {profile.stage}
+                            </h4>
+                            <p className="text-sm text-gray-600">
+                              {profile.description}
+                            </p>
+                          </div>
+
+                          <div className="space-y-3">
+                            <div>
+                              <h5 className="text-xs font-semibold text-gray-700 uppercase tracking-wide mb-1">
+                                Key Traits
+                              </h5>
+                              <ul className="text-xs text-gray-600 space-y-1">
+                                {profile.keyTraits
+                                  .slice(0, 2)
+                                  .map((trait, idx) => (
+                                    <li key={idx} className="flex items-start">
+                                      <span className="text-green-500 mr-1">
+                                        •
+                                      </span>
+                                      {trait}
+                                    </li>
+                                  ))}
+                              </ul>
+                            </div>
+
+                            <div>
+                              <h5 className="text-xs font-semibold text-gray-700 uppercase tracking-wide mb-1">
+                                Value Props
+                              </h5>
+                              <ul className="text-xs text-gray-600 space-y-1">
+                                {profile.valueProposition
+                                  .slice(0, 2)
+                                  .map((value, idx) => (
+                                    <li key={idx} className="flex items-start">
+                                      <span className="text-green-500 mr-1">
+                                        •
+                                      </span>
+                                      {value}
+                                    </li>
+                                  ))}
+                              </ul>
+                            </div>
+
+                            <div>
+                              <h5 className="text-xs font-semibold text-gray-700 uppercase tracking-wide mb-1">
+                                Common Objections
+                              </h5>
+                              <ul className="text-xs text-gray-600 space-y-1">
+                                {profile.objections
+                                  .slice(0, 2)
+                                  .map((objection, idx) => (
+                                    <li key={idx} className="flex items-start">
+                                      <span className="text-red-500 mr-1">
+                                        •
+                                      </span>
+                                      {objection}
+                                    </li>
+                                  ))}
+                              </ul>
+                            </div>
+                          </div>
+
+                          <div className="mt-4 pt-3 border-t border-gray-200">
+                            <div className="flex flex-wrap gap-1">
+                              {profile.tags.map((tag, idx) => (
+                                <span
+                                  key={idx}
+                                  className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800"
+                                >
+                                  {tag}
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
 
               {/* Information Cards Grid */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

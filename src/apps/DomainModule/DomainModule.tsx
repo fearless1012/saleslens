@@ -1,48 +1,205 @@
 import React, { useState } from "react";
-import axios from "axios";
 import Sidebar from "@/components/ui/Sidebar";
+import SlidesService from "@/services/slidesService";
 
 const DomainModule: React.FC = () => {
   const [isGenerating, setIsGenerating] = useState(false);
   const [generationStatus, setGenerationStatus] = useState<string>("");
+  const [presentationId, setPresentationId] = useState<string>("");
+  const [embedUrl, setEmbedUrl] = useState<string>("");
+
+  const handleTestLogin = async () => {
+    try {
+      const API_URL =
+        (import.meta as any).env.VITE_API_URL || "http://localhost:3001/api";
+      const response = await fetch(`${API_URL}/auth/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: "test@example.com",
+          password: "password123",
+        }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        localStorage.setItem("token", data.token);
+        setGenerationStatus(
+          "✅ Test user logged in successfully! You can now generate presentations."
+        );
+      } else {
+        setGenerationStatus("❌ Test login failed");
+      }
+    } catch (error) {
+      setGenerationStatus("❌ Test login error");
+    }
+  };
 
   const handleGenerateTrainingModules = async () => {
+    // Check if user is authenticated
+    const token = localStorage.getItem("token");
+    if (!token) {
+      setGenerationStatus("❌ Please log in to generate presentations");
+      return;
+    }
+
     setIsGenerating(true);
-    setGenerationStatus("🚀 Starting training module generation...");
+    setGenerationStatus("🚀 Starting presentation generation...");
+    setPresentationId("");
+    setEmbedUrl("");
 
     try {
       const token = localStorage.getItem("token") || "";
       const API_URL =
         (import.meta as any).env.VITE_API_URL || "http://localhost:3001/api";
 
-      console.log("🔄 Sending request to generate training modules...");
+      // Generate the presentation using backend API
+      const prompt =
+        "Create a comprehensive training module about Meta offerings including Meta Ads, AR/VR solutions, and AI API tools. Include best practices, key metrics like ROAS, CTR, CPA, campaign objectives, and practical implementation strategies for performance marketing.";
 
-      const response = await axios.post(
-        `${API_URL}/training-modules/generate`,
-        { saveToDatabase: true },
+      console.log("🔄 Generating presentation via backend API...");
+      console.log("API URL:", `${API_URL}/training-modules/generate-slides`);
+      console.log("Request payload:", { prompt });
+
+      const response = await fetch(
+        `${API_URL}/training-modules/generate-slides`,
         {
+          method: "POST",
           headers: {
             "x-auth-token": token,
             "Content-Type": "application/json",
           },
+          body: JSON.stringify({ prompt }),
         }
       );
 
-      if (response.data.status === "success") {
-        setGenerationStatus(
-          `✅ Successfully generated ${response.data.data.totalModules} training modules!`
+      if (!response.ok) {
+        let errorMessage = `HTTP ${response.status}`;
+        try {
+          const errorData = await response.json();
+          errorMessage = errorData.message || errorMessage;
+        } catch (parseError) {
+          // If response is not JSON (e.g., HTML error page), use status text
+          errorMessage = `${response.status} ${response.statusText}`;
+        }
+        throw new Error(errorMessage);
+      }
+
+      let result;
+      try {
+        result = await response.json();
+      } catch (parseError) {
+        console.error("Failed to parse response as JSON:", parseError);
+        throw new Error(
+          "Server returned invalid response format. Please check if the API endpoint is correct."
         );
-        console.log("🎉 Training modules generated:", response.data.data);
+      }
+
+      if (result.status === "success" && result.data?.id) {
+        setPresentationId(result.data.id);
+        setGenerationStatus(
+          `✅ Successfully generated presentation! ID: ${result.data.id}`
+        );
+
+        // If embed is available, try to get the embed URL
+        if (result.data.embed) {
+          try {
+            const embedResponse = await SlidesService.getEmbedUrl(
+              result.data.id
+            );
+            if (embedResponse.url) {
+              setEmbedUrl(embedResponse.url);
+              setGenerationStatus(
+                `✅ Presentation ready! You can view or download it below.`
+              );
+            }
+          } catch (embedError) {
+            console.error("Error getting embed URL:", embedError);
+          }
+        }
+
+        console.log("🎉 Presentation generated:", result.data);
       } else {
-        setGenerationStatus("❌ Failed to generate training modules");
+        setGenerationStatus("❌ Failed to generate presentation");
       }
     } catch (error: any) {
-      console.error("❌ Error generating training modules:", error);
-      setGenerationStatus(
-        `❌ Error: ${error.response?.data?.message || error.message}`
-      );
+      console.error("❌ Error generating presentation:", error);
+
+      let errorMessage = "Failed to generate presentation";
+      if (
+        error.message.includes("Token is not valid") ||
+        error.message.includes("authorization denied")
+      ) {
+        errorMessage = "Authentication failed. Please log in again.";
+      } else if (
+        error.message.includes("Server returned invalid response format")
+      ) {
+        errorMessage = "Server error. Please try again later.";
+      } else if (error.message) {
+        errorMessage = error.message;
+      }
+
+      setGenerationStatus(`❌ Error: ${errorMessage}`);
     } finally {
       setIsGenerating(false);
+    }
+  };
+
+  const handleDownloadPresentation = async () => {
+    if (!presentationId) return;
+
+    // Check if user is authenticated
+    const token = localStorage.getItem("token");
+    if (!token) {
+      setGenerationStatus("❌ Please log in to download presentations");
+      return;
+    }
+
+    try {
+      setGenerationStatus("📥 Downloading presentation...");
+      const token = localStorage.getItem("token") || "";
+      const API_URL =
+        (import.meta as any).env.VITE_API_URL || "http://localhost:3001/api";
+
+      const response = await fetch(
+        `${API_URL}/training-modules/download-slides/${presentationId}`,
+        {
+          method: "GET",
+          headers: {
+            "x-auth-token": token,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        let errorMessage = `HTTP ${response.status}`;
+        try {
+          const errorData = await response.json();
+          errorMessage = errorData.message || errorMessage;
+        } catch (parseError) {
+          // If response is not JSON (e.g., HTML error page), use status text
+          errorMessage = `${response.status} ${response.statusText}`;
+        }
+        throw new Error(errorMessage);
+      }
+
+      // Create blob from response and trigger download
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `training-module-${presentationId}.pptx`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+
+      setGenerationStatus("✅ Presentation downloaded successfully!");
+    } catch (error: any) {
+      console.error("❌ Error downloading presentation:", error);
+      setGenerationStatus(`❌ Download failed: ${error.message}`);
     }
   };
 
@@ -142,46 +299,77 @@ const DomainModule: React.FC = () => {
                       🤖 AI Training Module Generator
                     </h2>
                     <p className="text-gray-600">
-                      Use LLAMA AI to automatically generate comprehensive
-                      training modules from your domain knowledge data.
+                      Use SlidesGPT AI to automatically generate comprehensive
+                      training presentations from your domain knowledge data.
                     </p>
                   </div>
                   <div className="flex flex-col items-end space-y-2">
-                    <button
-                      onClick={handleGenerateTrainingModules}
-                      disabled={isGenerating}
-                      className={`px-6 py-3 rounded-lg font-medium transition-all flex items-center space-x-2 ${
-                        isGenerating
-                          ? "bg-gray-400 cursor-not-allowed"
-                          : "bg-purple-600 hover:bg-purple-700 text-white shadow-md hover:shadow-lg"
-                      }`}
-                    >
-                      {isGenerating ? (
-                        <>
-                          <svg
-                            className="animate-spin h-5 w-5 text-white"
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                          >
-                            <circle
-                              className="opacity-25"
-                              cx="12"
-                              cy="12"
-                              r="10"
+                    <div className="flex space-x-2">
+                      <button
+                        onClick={handleTestLogin}
+                        className="px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-lg font-medium transition-all text-sm"
+                      >
+                        Test Login
+                      </button>
+                      <button
+                        onClick={handleGenerateTrainingModules}
+                        disabled={isGenerating}
+                        className={`px-6 py-3 rounded-lg font-medium transition-all flex items-center space-x-2 ${
+                          isGenerating
+                            ? "bg-gray-400 cursor-not-allowed"
+                            : "bg-purple-600 hover:bg-purple-700 text-white shadow-md hover:shadow-lg"
+                        }`}
+                      >
+                        {isGenerating ? (
+                          <>
+                            <svg
+                              className="animate-spin h-5 w-5 text-white"
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                            >
+                              <circle
+                                className="opacity-25"
+                                cx="12"
+                                cy="12"
+                                r="10"
+                                stroke="currentColor"
+                                strokeWidth="4"
+                              ></circle>
+                              <path
+                                className="opacity-75"
+                                fill="currentColor"
+                                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                              ></path>
+                            </svg>
+                            <span>Generating...</span>
+                          </>
+                        ) : (
+                          <>
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              className="h-5 w-5"
+                              fill="none"
+                              viewBox="0 0 24 24"
                               stroke="currentColor"
-                              strokeWidth="4"
-                            ></circle>
-                            <path
-                              className="opacity-75"
-                              fill="currentColor"
-                              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                            ></path>
-                          </svg>
-                          <span>Generating...</span>
-                        </>
-                      ) : (
-                        <>
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M13 10V3L4 14h7v7l9-11h-7z"
+                              />
+                            </svg>
+                            <span>Generate Presentation</span>
+                          </>
+                        )}
+                      </button>
+
+                      {presentationId && (
+                        <button
+                          onClick={handleDownloadPresentation}
+                          className="px-6 py-3 bg-green-600 hover:bg-green-700 text-white rounded-lg font-medium transition-all flex items-center space-x-2 shadow-md hover:shadow-lg"
+                        >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             className="h-5 w-5"
@@ -193,13 +381,14 @@ const DomainModule: React.FC = () => {
                               strokeLinecap="round"
                               strokeLinejoin="round"
                               strokeWidth={2}
-                              d="M13 10V3L4 14h7v7l9-11h-7z"
+                              d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
                             />
                           </svg>
-                          <span>Generate Training Modules</span>
-                        </>
+                          <span>Download PPTX</span>
+                        </button>
                       )}
-                    </button>
+                    </div>
+
                     {generationStatus && (
                       <div
                         className={`text-sm px-3 py-1 rounded-full ${
@@ -215,10 +404,29 @@ const DomainModule: React.FC = () => {
                     )}
                   </div>
                 </div>
+
+                {/* Presentation Viewer */}
+                {embedUrl && (
+                  <div className="mt-6 border border-gray-200 rounded-lg overflow-hidden">
+                    <div className="bg-gray-50 px-4 py-2 border-b border-gray-200">
+                      <h3 className="text-sm font-medium text-gray-700">
+                        Generated Training Presentation
+                      </h3>
+                    </div>
+                    <iframe
+                      src={embedUrl}
+                      className="w-full h-96"
+                      frameBorder="0"
+                      allowFullScreen
+                      title="Generated Training Presentation"
+                    />
+                  </div>
+                )}
+
                 <div className="mt-4 text-xs text-gray-500">
-                  💡 The AI will analyze your uploaded domain knowledge files
-                  and generate structured training modules with lessons,
-                  objectives, and assessments.
+                  💡 The AI will analyze Meta's offerings and generate a
+                  structured training presentation with comprehensive content
+                  about advertising, AR/VR solutions, and API tools.
                 </div>
               </div>
 
@@ -468,75 +676,6 @@ const DomainModule: React.FC = () => {
                     </svg>
                   </button>
                 </div>
-              </div>
-
-              {/* Training Module Generation Section */}
-              <div className="bg-white rounded-lg shadow-lg p-8 mb-8">
-                <h2 className="text-2xl font-bold text-gray-900 mb-4">
-                  Generate Training Modules
-                </h2>
-                <p className="text-gray-700 mb-6">
-                  Create customized training modules for your team based on the
-                  latest best practices and strategies.
-                </p>
-
-                <div className="flex items-center space-x-4 mb-4">
-                  <button
-                    onClick={handleGenerateTrainingModules}
-                    disabled={isGenerating}
-                    className={`flex-1 px-4 py-2 rounded-lg font-semibold transition-all flex items-center justify-center ${
-                      isGenerating
-                        ? "bg-gray-300 text-gray-700 cursor-not-allowed"
-                        : "bg-blue-600 text-white hover:bg-blue-700"
-                    }`}
-                  >
-                    {isGenerating ? (
-                      <>
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="h-5 w-5 mr-2 animate-spin"
-                          viewBox="0 0 20 20"
-                          fill="currentColor"
-                        >
-                          <path
-                            fillRule="evenodd"
-                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z"
-                            clipRule="evenodd"
-                          />
-                        </svg>
-                        Generating...
-                      </>
-                    ) : (
-                      <>
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="h-5 w-5 mr-2"
-                          viewBox="0 0 20 20"
-                          fill="currentColor"
-                        >
-                          <path
-                            fillRule="evenodd"
-                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z"
-                            clipRule="evenodd"
-                          />
-                        </svg>
-                        Generate Training Modules
-                      </>
-                    )}
-                  </button>
-                </div>
-
-                {generationStatus && (
-                  <div
-                    className={`p-4 rounded-lg text-sm ${
-                      generationStatus.startsWith("✅")
-                        ? "bg-green-50 text-green-800"
-                        : "bg-red-50 text-red-800"
-                    }`}
-                  >
-                    {generationStatus}
-                  </div>
-                )}
               </div>
 
               {/* Footer */}
